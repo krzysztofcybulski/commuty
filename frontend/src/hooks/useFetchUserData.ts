@@ -8,6 +8,7 @@ export const useFetchUserData = () => {
     const {user} = useUser()
 
     return () => {
+        console.log("fetching user data...")
         if (user) {
             dispatch(updateUser({
                 name: user.fullName!,
