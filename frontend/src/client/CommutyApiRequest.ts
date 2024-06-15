@@ -17,11 +17,11 @@ interface TimeRange {
   returnTime: string; // localtime
 }
 interface PointOfInterest {
-  longitude: string;
-  latitude: string;
+  longitude?: string;
+  latitude?: string;
   levelOfDetail: number;
 }
 interface User {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
 }
