@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store.ts';
+import {Point} from "../hooks/useFindRoute.ts";
 
 type ViewType = 'WELCOME' | 'SELECT_COMMUTING_PREFERENCES';
 
@@ -13,6 +14,8 @@ type RidePreferencesFields = Record<RidePreference, boolean>;
 export interface AppState {
   view: ViewType;
   ridePreferencesFields: RidePreferencesFields;
+  addressFrom?: Point
+  addressTo?: Point
 }
 
 const initialState: AppState = {
@@ -36,11 +39,17 @@ export const appReducer = createSlice({
         ...action.payload,
       };
     },
+    updateAddressFrom: (state, action: PayloadAction<Point | undefined>) => {
+        state.addressFrom = action.payload
+    },
+    updateAddressTo: (state, action: PayloadAction<Point | undefined>) => {
+        state.addressTo = action.payload
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateView, updateRidePreferences } = appReducer.actions;
+export const { updateView, updateRidePreferences, updateAddressFrom, updateAddressTo } = appReducer.actions;
 
 export const selectView = (state: RootState) => state.appSlice.view;
 

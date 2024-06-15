@@ -8,7 +8,7 @@ import {appReducer} from "./appReducer.ts";
 
 const rootReducer = combineReducers({
     userSlice: userReducer.reducer,
-    appSlice: appReducer.reducer
+    appSlice: appReducer.reducer,
 })
 
 const persistConfig = {
