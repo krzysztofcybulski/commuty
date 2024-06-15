@@ -54,7 +54,7 @@ export const RootView = () => {
         }
     }
 
-    return <div className="max-w-lg flex justify-stretch items-stretch">
+    return <div className="flex justify-stretch items-stretch w-full">
         <OnboardingView config={configBasedOnView()}>
             {getView()}
         </OnboardingView>

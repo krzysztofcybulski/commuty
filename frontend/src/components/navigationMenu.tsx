@@ -5,7 +5,7 @@ export const NavigationMenu = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <nav className="bg-blue-500 p-4">
-        <div className="container mx-auto flex justify-between">
+        <div className="mx-auto flex justify-between">
           <div className="text-white text-lg font-semibold">My Website</div>
           <div className="space-x-4">
             <Link to="/" className="text-white hover:text-gray-200">
