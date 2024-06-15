@@ -29,10 +29,7 @@ export const SelectCommutingPreferencesView = () => {
 
     return (
         <div className="flex-col max-h-full">
-            <div style={{height: '50vh'}} className="p-8">
-                <BackButton view="WELCOME"/>
-                <TypographyH1 text={'Where are you commuting?'} className="font-medium text-xl"/>
-                <TypographyH2 text={"Don't worry we will keep it private"} className="mb-4 font-extralight text-base"/>
+            <div style={{height: '50vh'}} className="p-4 flex flex-col justify-center">
                 <div className="flex-col space-y-4 pt-16">
                     <TypographyH4 text={'I’m going from'}></TypographyH4>
                     <AddressInput handleAddressChanged={address => {

@@ -37,19 +37,25 @@ export const RootView = () => {
                 return {
                     onContinueClick: () => {
                         dispatch(updateView('SELECT_COMMUTING_PREFERENCES'))
-                    }
+                    },
+                    title: 'Hey! Tell us what are you looking for',
+                    subTitle: 'It’s fine to select both'
                 }
             case 'SELECT_COMMUTING_PREFERENCES':
                 return {
                     onContinueClick: () => {
                         dispatch(updateView('WHEN_YOU_ARE_GOING'))
-                    }
+                    },
+                    title: 'When are you going?',
+                    subTitle: 'It’s fine to select both'
                 }
             case 'WHEN_YOU_ARE_GOING':
                 return {
                     onContinueClick: () => {
                         dispatch(updateView('WHEN_YOU_ARE_GOING'))
-                    }
+                    },
+                    title: 'Where are you commuting?',
+                    subTitle: 'It’s fine to select both'
                 }
         }
     }
