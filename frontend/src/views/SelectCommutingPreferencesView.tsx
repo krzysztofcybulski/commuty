@@ -32,7 +32,9 @@ export const SelectCommutingPreferencesView = () => {
 
     return (
         <div className="flex-col max-h-full">
-            <div style={{height: '50vh'}} className="p-4 flex flex-col justify-center">
+            <div className="p-4 pt-32 pb-16 flex flex-col justify-center" style={{
+                height: '40vh'
+            }}>
                 <div className="flex-col space-y-4 pt-16">
                     <TypographyH4 text={'I’m going from'}></TypographyH4>
                     <AddressInput handleAddressChanged={address => {
@@ -55,15 +57,7 @@ export const SelectCommutingPreferencesView = () => {
                     </AddressInput>
                 </div>
             </div>
-            <div
-                style={{
-                    position: 'relative',
-                    width: '100vw',
-                    height: '65vh',
-                }}
-            >
-                <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint}/>
-            </div>
+            <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint}/>
         </div>
     );
 };

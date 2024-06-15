@@ -33,7 +33,7 @@ export const RouteMap = ({startingPoint, destinationPoint}: RouteMapProps) => {
     return <GoogleMap
         mapContainerStyle={{
             width: '100vw',
-            height: '65vh',
+            height: '60vh',
         }}
         options={options}
         zoom={14}
