@@ -7,6 +7,7 @@ interface ChosenWeekDay {
 
 interface WeekDaysDisplayProps {
   chosenWeekDays: ChosenWeekDay[];
+  className?: string;
 }
 
 enum WeekDayFullNameToShortName {
@@ -19,13 +20,13 @@ enum WeekDayFullNameToShortName {
   'SUNDAY' = 'Su',
 }
 
-export const WeekDaysDisplay = ({ chosenWeekDays }: WeekDaysDisplayProps) => {
+export const WeekDaysDisplay = ({ chosenWeekDays, className }: WeekDaysDisplayProps) => {
   return (
-    <div>
+    <div className={`flex flex-row gap-1 ${className}`}>
       {chosenWeekDays.map((chosenWeekDay, index) => {
         return (
           <div
-            className={`rounded-full w-6 h-6 flex flex-row items-center justify-center text-white text-xs ${chosenWeekDay.isChosen ? 'bg-slate-400' : 'bg-gray-800'}`}
+            className={`rounded-full w-6 h-6 flex flex-row items-center justify-center text-white text-xs ${chosenWeekDay.isChosen ? 'bg-gray-800' : 'bg-slate-400'}`}
             key={index}
           >
             {WeekDayFullNameToShortName[chosenWeekDay.chosenWeekDay]}
