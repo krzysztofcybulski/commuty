@@ -62,9 +62,6 @@ export const WelcomeView = () => {
           <Button ridePreference={RidePreference.PASSENGER} text="I would like to be a pasanger" />
         </div>
       </div>
-      <div className="flex justify-end mt-auto">
-        <ContinueButton onClick={onContinueClick} />
-      </div>
     </div>
   );
 };

@@ -1,135 +1,85 @@
-import { Autocomplete, DirectionsRenderer, GoogleMap, useLoadScript } from '@react-google-maps/api';
-import { TypographyH2 } from '../components/TypographyH2.tsx';
-import { TypographyH4 } from '../components/TypographyH4.tsx';
-import { Point, useFindRoute } from '../hooks/useFindRoute.ts';
-import React, { useEffect, useState } from 'react';
-import { updateAddressFrom, updateAddressTo, updateView } from '../store/appReducer.ts';
-import { useAppDispatch } from '../store/store.ts';
-import { ContinueButton } from '../components/ContinueButton.tsx';
-import { TypographyH1 } from '../components/TypographyH1.tsx';
-import { BackButton } from '../components/BackButton.tsx';
+import {useLoadScript} from '@react-google-maps/api';
+import {TypographyH2} from '../components/TypographyH2.tsx';
+import {TypographyH4} from '../components/TypographyH4.tsx';
+import {Point} from '../hooks/useFindRoute.ts';
+import {useState} from 'react';
+import {updateAddressFrom, updateView} from '../store/appReducer.ts';
+import {useAppDispatch} from '../store/store.ts';
+import {ContinueButton} from '../components/ContinueButton.tsx';
+import {TypographyH1} from '../components/TypographyH1.tsx';
+import {BackButton} from '../components/BackButton.tsx';
+import {Input} from "../components/Input.tsx";
+import {AddressInput} from "../components/AddressInput.tsx";
+import {RouteMap} from "../components/RouteMap.tsx";
 
 export const SelectCommutingPreferencesView = () => {
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    id: '982eaad930f4790c',
-    libraries: ['places'],
-  });
+    const {isLoaded, loadError} = useLoadScript({
+        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+        id: '982eaad930f4790c',
+        libraries: ['places'],
+    });
 
-  const [directions, setDirections] = useState<any>(null);
-  const findRoute = useFindRoute({ setDirections: setDirections });
-  const [startingAutocomplete, setStartingAutocomplete] = useState<any>(null);
-  const [destinationAutocomplete, setDestinationAutocomplete] = useState<any>(null);
-  const [startingPoint, setStartingPoint] = useState<Point | undefined>(undefined);
-  const [destinationPoint, setDestinationPoint] = useState<Point | undefined>(undefined);
-  const dispatch = useAppDispatch();
+    const [startingPoint, setStartingPoint] = useState<Point | undefined>(undefined);
+    const [destinationPoint, setDestinationPoint] = useState<Point | undefined>(undefined);
+    const [startingFromAddress, setStartingFromAddress] = useState<string>("");
+    const [destinationAddress, setDestinationAddress] = useState<string>("");
+    const dispatch = useAppDispatch();
 
-  const handleAutocompleteChange = (autocomplete: any): Point | undefined => {
-    if (autocomplete !== null) {
-      const location = autocomplete.getPlace().geometry.location;
-      return {
-        lat: location.lat(),
-        lng: location.lng(),
-      };
-    } else {
-      console.log('Autocomplete is not loaded yet!');
-      return undefined;
-    }
-  };
-
-  useEffect(() => {
-    if (startingPoint && destinationPoint) {
-      findRoute(startingPoint!, destinationPoint!);
-    }
-  }, [startingPoint, destinationPoint]);
-
-  const options = {
-    disableDefaultUI: true,
-    gestureHandling: 'greedy',
-    mapId: 'fbd0e4c5778bb4b3',
-  };
-
-  const center = {
-    lat: 52.2318813,
-    lng: 21.0324811,
-  };
-
-  if (loadError) return <div>Error loading maps</div>;
-  if (!isLoaded) return <div>Loading Maps</div>;
-
-  const startingPointChanged = () => {
-    const point = handleAutocompleteChange(startingAutocomplete);
-    setStartingPoint(point);
-    dispatch(updateAddressFrom(point));
-  };
-
-  const destinationChanged = () => {
-    const point = handleAutocompleteChange(destinationAutocomplete);
-    setDestinationPoint(point);
-    dispatch(updateAddressTo(point));
-  };
-
-  const onContinueClick = () => {
-    dispatch(updateView('WHEN_YOU_ARE_GOING'));
-  };
-
-  return (
-    <div className="flex-col max-h-full">
-      <div style={{ height: '50vh' }} className="p-8">
-        <BackButton view="WELCOME" />
-        <TypographyH1 text={'Where are you commuting?'} className="font-medium text-xl" />
-        <TypographyH2 text={"Don't worry we will keep it private"} className="mb-4 font-extralight text-base" />
-        <div className="flex-col space-y-4 pt-16">
-          <TypographyH4 text={'I’m going from'}></TypographyH4>
-          <Autocomplete onLoad={(e) => setStartingAutocomplete(e)} onPlaceChanged={startingPointChanged}>
-            <input
-              type="text"
-              id="large-input"
-              placeholder="Start typing address..."
-              className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"
-            />
-          </Autocomplete>
-          <TypographyH4 text={'To'}></TypographyH4>
-          <Autocomplete onLoad={(e) => setDestinationAutocomplete(e)} onPlaceChanged={destinationChanged}>
-            <input
-              type="text"
-              id="large-input"
-              placeholder="Add your work location..."
-              className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"
-            />
-          </Autocomplete>
-        </div>
-      </div>
-      <div
-        style={{
-          position: 'relative',
-          width: '100vw',
-          height: '65vh',
-        }}
-      >
-        {/*
-    const buttonStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)', // Centers the button exactly in the middle
-        zIndex: 10, // Ensures the button is above the map layer
+    const options = {
+        disableDefaultUI: true,
+        gestureHandling: 'greedy',
+        mapId: 'fbd0e4c5778bb4b3',
     };
 
-                */}
-        <ContinueButton className="absolute z-10 top-1/2 min-w-0 w-3/4 ml-12 mr-12" onClick={onContinueClick} />
-        <GoogleMap
-          mapContainerStyle={{
-            width: '100vw',
-            height: '65vh',
-          }}
-          options={options}
-          zoom={14}
-          center={center}
-        >
-          {directions && <DirectionsRenderer directions={directions} />}
-        </GoogleMap>
-      </div>
-    </div>
-  );
+    const center = {
+        lat: 52.2318813,
+        lng: 21.0324811,
+    };
+
+    if (loadError) return <div>Error loading maps</div>;
+    if (!isLoaded) return <div>Loading Maps</div>;
+
+    const onContinueClick = () => {
+        dispatch(updateView('WHEN_YOU_ARE_GOING'));
+    };
+
+    return (
+        <div className="flex-col max-h-full">
+            <div style={{height: '50vh'}} className="p-8">
+                <BackButton view="WELCOME"/>
+                <TypographyH1 text={'Where are you commuting?'} className="font-medium text-xl"/>
+                <TypographyH2 text={"Don't worry we will keep it private"} className="mb-4 font-extralight text-base"/>
+                <div className="flex-col space-y-4 pt-16">
+                    <TypographyH4 text={'I’m going from'}></TypographyH4>
+                    <AddressInput handleAddressChanged={address => {
+                        setStartingPoint(address.point)
+                        dispatch(updateAddressFrom(address.point));
+                        setStartingFromAddress(address.name)
+                    }}>
+                        <Input placeholder={"Start typing address..."} value={startingFromAddress}
+                               onChange={setStartingFromAddress}></Input>
+                    </AddressInput>
+                    <TypographyH4 text={'To'}></TypographyH4>
+                    <AddressInput handleAddressChanged={address => {
+                        dispatch(updateAddressFrom(address.point));
+                        setDestinationPoint(address.point)
+                        setDestinationAddress(address.name)
+                    }}>
+                        <Input placeholder={"Add your work location..."}
+                               value={destinationAddress}
+                               onChange={setDestinationAddress}></Input>
+                    </AddressInput>
+                </div>
+            </div>
+            <div
+                style={{
+                    position: 'relative',
+                    width: '100vw',
+                    height: '65vh',
+                }}
+            >
+                <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint}/>
+            </div>
+        </div>
+    );
 };
