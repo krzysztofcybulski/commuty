@@ -1,3 +1,3 @@
 export const WhenYouAreGoingView = () => {
-    return <div>WhenYouAreGoingView</div>
-}
+  return <div>when you are going view</div>;
+};

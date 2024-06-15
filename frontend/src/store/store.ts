@@ -1,25 +1,24 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
-import {userReducer} from './userReducer.ts';
-import {useDispatch, useSelector} from 'react-redux';
-import {persistReducer, persistStore} from 'redux-persist'
-import storage from "redux-persist/lib/storage";
-import {appReducer} from "./appReducer.ts";
-
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { userReducer } from './userReducer.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { appReducer } from './appReducer.ts';
 
 const rootReducer = combineReducers({
-    userSlice: userReducer.reducer,
-    appSlice: appReducer.reducer,
-})
+  userSlice: userReducer.reducer,
+  appSlice: appReducer.reducer,
+});
 
 const persistConfig = {
-    key: 'root',
-    storage,
-}
+  key: 'root',
+  storage,
+};
 
-export const persistedReducer = persistReducer(persistConfig, rootReducer)
+export const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    reducer: persistedReducer,
+  reducer: persistedReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -28,4 +27,4 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
