@@ -8,6 +8,7 @@ export interface ViewConfig {
     onContinueClick: () => void;
     title?: string;
     subTitle?: string;
+    buttonDisabled?: boolean;
 }
 
 export interface OnboardingViewProps {
@@ -24,7 +25,7 @@ export const OnboardingView = ({children, config}: OnboardingViewProps) => {
         </div>
         {children}
         <div className="fixed flex items-stretch justify-stretch w-full bottom-0">
-            <ContinueButton className="grow m-4" onClick={config.onContinueClick}/>
+            { !config.buttonDisabled &&  <ContinueButton className="grow m-4" onClick={config.onContinueClick}/> }
         </div>
     </div>
 }

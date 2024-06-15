@@ -7,13 +7,16 @@ import {selectView, updateView} from '../store/appReducer.ts';
 import {SelectCommutingPreferencesView} from './SelectCommutingPreferencesView.tsx';
 import {WhenYouAreGoingView} from "./WhenYouAreGoingView.tsx";
 import {OnboardingView, ViewConfig} from "../components/OnboardingView.tsx";
-import {SetYourNameView} from "./SetYourNameView.tsx";
+import {SetYourNameView} from './SetYourNameView.tsx';
+import {CreateAccountView} from "./CreateAccountView.tsx";
+// import {useSelector} from "react-redux";
 
 export const RootView = () => {
     const {user} = useUser();
     const saveUserData = useSaveUserData();
     const view = useAppSelector(selectView);
     const dispatch = useAppDispatch();
+    // const payload = useSelector(selectPayload)
 
     useEffect(() => {
         saveUserData(user);
@@ -29,10 +32,12 @@ export const RootView = () => {
                 return <WhenYouAreGoingView></WhenYouAreGoingView>;
             case 'SET_YOUR_NAME':
                 return <SetYourNameView></SetYourNameView>;
+            case 'CREATE_ACCOUNT':
+                return <CreateAccountView></CreateAccountView>;
         }
     };
 
-    const configBasedOnView = (): ViewConfig => {
+    const configBasedOnView = (): ViewConfig | undefined => {
         switch (view) {
             case 'WELCOME':
                 return {
@@ -61,14 +66,24 @@ export const RootView = () => {
             case 'SET_YOUR_NAME':
                 return {
                     onContinueClick: () => {
-                        dispatch(updateView('WHEN_YOU_ARE_GOING'))
+                        dispatch(updateView('CREATE_ACCOUNT'))
                     }
                 }
+            case 'CREATE_ACCOUNT':
+                return {
+                    onContinueClick: () => {
+                        console.log()
+                        // dispatch(updateView('HOME_PAGE'))
+                    },
+                    buttonDisabled: 'Create Account'
+                }
+            default:
+                return undefined;
         }
     }
 
     return <div className="flex justify-stretch items-stretch w-full">
-        <OnboardingView config={configBasedOnView()}>
+        <OnboardingView config={configBasedOnView()!}>
             {getView()}
         </OnboardingView>
     </div>;
