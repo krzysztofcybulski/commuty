@@ -1,15 +1,12 @@
 import {useLoadScript} from '@react-google-maps/api';
-import {TypographyH2} from '../components/TypographyH2.tsx';
 import {TypographyH4} from '../components/TypographyH4.tsx';
 import {Point} from '../hooks/useFindRoute.ts';
-import React, {useState} from 'react';
-import {updateAddressFrom, updateAddressTo, updateView} from '../store/appReducer.ts';
+import {useState} from 'react';
+import {updateAddressFrom, updateAddressTo} from '../store/appReducer.ts';
 import {useAppDispatch} from '../store/store.ts';
-import {TypographyH1} from '../components/TypographyH1.tsx';
-import {BackButton} from '../components/BackButton.tsx';
 import {Input} from "../components/Input.tsx";
 import {AddressInput} from "../components/AddressInput.tsx";
-import {RouteMap} from "../components/RouteMap.tsx";
+import {RouteMap} from '../components/RouteMap.tsx';
 
 export const SelectCommutingPreferencesView = () => {
     const {isLoaded, loadError} = useLoadScript({
@@ -18,8 +15,14 @@ export const SelectCommutingPreferencesView = () => {
         libraries: ['places'],
     });
 
-    const [startingPoint, setStartingPoint] = useState<Point | undefined>(undefined);
-    const [destinationPoint, setDestinationPoint] = useState<Point | undefined>(undefined);
+    const [startingPoint, setStartingPoint] = useState<Point | undefined>({
+        lat: 52.249472,
+        lng: 21.098527
+    });
+    const [destinationPoint, setDestinationPoint] = useState<Point | undefined>({
+        lat: 52.2323778,
+        lng: 20.9861998
+    });
     const [startingFromAddress, setStartingFromAddress] = useState<string>("");
     const [destinationAddress, setDestinationAddress] = useState<string>("");
     const dispatch = useAppDispatch();
