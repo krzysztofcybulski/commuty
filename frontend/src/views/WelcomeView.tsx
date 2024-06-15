@@ -5,7 +5,8 @@ import { CommutyApiRequest } from '../client/CommutyApiRequest.ts';
 import { TypographyH4 } from '../components/TypographyH4.tsx';
 import { ContinueButton } from '../components/ContinueButton.tsx';
 import { useAppDispatch } from '../store/store.ts';
-import { RidePreference, updateRidePreferences, updateView } from '../store/appReducer.ts';
+import { RidePreference, updatePayload, updateRidePreferences, updateView } from '../store/appReducer.ts';
+import {TypographyH1} from "../components/TypographyH1.tsx";
 
 export const exampleRequest: CommutyApiRequest = {
   user: {
@@ -51,17 +52,21 @@ export const WelcomeView = () => {
   };
 
   return (
-    <div className="container mx-auto p-8 flex justify-center flex-col">
-      <div className="flex flex-col items-center">
-        <TypographyH2 text={'Hey! Tell us what are you looking for'} />
-        <TypographyH4 text={'It’s fine to select both'} className="mb-4" />
+      <div className="container mx-auto p-8 flex flex-col min-h-screen">
+        <div className="flex flex-col items-start">
+          <TypographyH1 text={'Hey! Tell us what are you looking for'} className="font-medium text-xl" />
+          <TypographyH2 text={'It’s fine to select both'} className="mb-4 font-light text-base"/>
+        </div>
+        <div className="flex-grow flex flex-col items-stretch justify-center">
+          <div className="flex flex-col mb-4">
+            <Button text="I can take people in my car"/>
+            <Button text="I would like to be a pasanger" className="mt-4"/>
+          </div>
+        </div>
+        <div className="flex justify-end mt-auto">
+          <ContinueButton onClick={onContinueClick}/>
+        </div>
       </div>
-      <div className="flex flex-col mb-4">
-        <Button ridePreference={RidePreference.DRIVER} text="I can take people in my car" />
-        <Button ridePreference={RidePreference.PASSENGER} text="I would like to be a pasanger" />
-      </div>
-      <ContinueButton onClick={onContinueClick} />
-    </div>
   );
 };
 
@@ -70,15 +75,15 @@ interface ButtonProps {
   ridePreference: RidePreference;
 }
 
-const Button = ({ text, ridePreference }: ButtonProps) => {
+const Button = ({text, ridePreference}: ButtonProps) => {
   const dispatch = useAppDispatch();
   const [isButtonClicked, setIsButtonClicked] = useState<boolean>(false);
   const handleClick = () => {
     setIsButtonClicked(!isButtonClicked);
     dispatch(
-      updateRidePreferences({
-        ridePreferencesFields: [ridePreference],
-      }),
+        updateRidePreferences({
+          ridePreferencesFields: [ridePreference],
+        }),
     );
   };
 
@@ -91,10 +96,10 @@ const Button = ({ text, ridePreference }: ButtonProps) => {
   }, [isButtonClicked]);
 
   return (
-    <div
-      className={`text-lg bg-gray-800 text-white rounded-lg flex flex-col justify-center mb-4 h-22 ${isButtonClicked ? 'outline-none ring-2 ring-violet-600' : ''}`}
-    >
-      <button onClick={handleClick} className={`h-22 relative px-4 py-2 transition`}>
+      <div
+          className={`text-lg bg-gray-800 text-white rounded-lg flex flex-col justify-center mb-4 h-22 ${isButtonClicked ? 'outline-none ring-2 ring-violet-600' : ''}`}
+      >
+        <button onClick={handleClick} className={`h-22 relative px-4 py-2 transition`}>
         <div className="flex justify-center my-1">{text}</div>
         <div className="flex justify-center">
           <img
