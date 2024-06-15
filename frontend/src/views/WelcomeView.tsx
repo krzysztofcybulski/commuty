@@ -30,7 +30,7 @@ export const exampleRequest: CommutyApiRequest = {
                 {
                     "day": "MONDAY",
                     "timeRange": {
-                        "departureTime": "8:00",
+                        "departureTime": "08:00",
                         "returnTime": "13:00"
                     }
                 }
