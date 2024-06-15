@@ -1,4 +1,4 @@
-package io.commuty.route;
+package io.commuty.route.resource;
 
 import java.util.UUID;
 
