@@ -9,6 +9,7 @@ import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/routes")
+@CrossOrigin
 public class RouteResource {
 
     private static final HashMap<UUID, Route> routesById = new HashMap<>();
