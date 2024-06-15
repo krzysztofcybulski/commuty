@@ -13,12 +13,14 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.2.4",
     "@react-google-maps/api": "^2.19.3",
     "@vis.gl/react-google-maps": "^1.0.2",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
