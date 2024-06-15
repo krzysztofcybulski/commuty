@@ -99,8 +99,22 @@ export const SelectCommutingPreferencesView = () => {
                     </Autocomplete>
                 </div>
             </div>
-            <div>
-                <ContinueButton onClick={onContinueClick}/>
+            <div style={{
+                position: 'relative',
+                width: '100vw',
+                height: '65vh',
+            }}>
+                {/*
+    const buttonStyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)', // Centers the button exactly in the middle
+        zIndex: 10, // Ensures the button is above the map layer
+    };
+
+                */}
+                <ContinueButton className="absolute z-10 top-1/2 min-w-0 w-3/4 ml-12 mr-12" onClick={onContinueClick}/>
                 <GoogleMap
                     mapContainerStyle={{
                         width: '100vw',
