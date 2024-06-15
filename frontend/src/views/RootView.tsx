@@ -1,24 +1,27 @@
-import {WelcomeView} from "./WelcomeView.tsx";
-import {useEffect} from "react";
-import {useUser} from "@clerk/clerk-react";
-import {useSaveUserData} from "../hooks/useSaveUserData.ts";
-import {useAppSelector} from "../store/store.ts";
-import {selectView} from "../store/appReducer.ts";
+import { WelcomeView } from './WelcomeView.tsx';
+import { useEffect } from 'react';
+import { useUser } from '@clerk/clerk-react';
+import { useSaveUserData } from '../hooks/useSaveUserData.ts';
+import { useAppSelector } from '../store/store.ts';
+import { selectView } from '../store/appReducer.ts';
 
 export const RootView = () => {
+  const { user } = useUser();
+  const saveUserData = useSaveUserData();
+  const view = useAppSelector(selectView);
 
-    const {user} = useUser()
-    const saveUserData = useSaveUserData()
-    const view = useAppSelector(selectView)
+  useEffect(() => {
+    saveUserData(user);
+  }, []);
 
-    useEffect(() => {
-        saveUserData(user)
-    }, []);
-
+  const getView = () => {
     switch (view) {
-        case "WELCOME":
-            return <WelcomeView></WelcomeView>
-        default:
-            return ""
+      case 'WELCOME':
+        return <WelcomeView></WelcomeView>;
+      default:
+        return '';
     }
-}
+  };
+
+  return <div className="max-w-max">{getView()}</div>;
+};
