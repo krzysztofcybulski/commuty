@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store.ts';
 import { Point } from '../hooks/useFindRoute.ts';
 
-export type ViewType = 'WELCOME' | 'SELECT_COMMUTING_PREFERENCES' | 'WHEN_YOU_ARE_GOING' | 'SET_YOUR_NAME' ;
+export type ViewType = 'WELCOME' | 'SELECT_COMMUTING_PREFERENCES' | 'WHEN_YOU_ARE_GOING' | 'SET_YOUR_NAME' | 'CREATE_ACCOUNT' | 'HOME_PAGE';
 
 export enum RidePreference {
   DRIVER = 'DRIVER',
@@ -16,7 +16,7 @@ export interface AppState {
   ridePreferencesFields: RidePreferencesFields;
   addressFrom?: Point;
   addressTo?: Point;
-  username?: string
+  username?: string;
 }
 
 const initialState: AppState = {
@@ -56,5 +56,13 @@ export const appReducer = createSlice({
 export const { updateView, updateRidePreferences, updateAddressFrom, updateAddressTo, updateUserName } = appReducer.actions;
 
 export const selectView = (state: RootState) => state.appSlice.view;
+
+// export const selectPayload = (state: RootState) => {
+//   const addressFrom = state.appSlice.addressFrom
+//   const addressTo  = state.appSlice.addressTo
+//   const username = state.appSlice.username
+//   const ridePreferences = state.appSlice.ridePreferencesFields
+//
+// }
 
 export default appReducer.reducer;
