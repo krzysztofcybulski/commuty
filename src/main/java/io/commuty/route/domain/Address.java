@@ -1,4 +1,4 @@
 package io.commuty.route.domain;
 
-public record Address(String longitude, String latitude, Integer levelOfDetail) {
+public record Address(Double longitude, Double latitude, Integer levelOfDetail) {
 }

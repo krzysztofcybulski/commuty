@@ -58,7 +58,7 @@ public class RouteCreateFlow {
     }
 
     private Address addressFrom(RestAddress address) {
-        return new Address(address.longitude(), address.latitude(), address.levelOfDetail());
+        return new Address(Double.valueOf(address.longitude()), Double.valueOf(address.latitude()), address.levelOfDetail());
     }
 
     private RidePreference ridePreferenceFrom(List<RestRidePreference> restRidePreferences) {
