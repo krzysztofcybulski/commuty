@@ -12,8 +12,8 @@ export interface OnboardingViewProps {
 export const OnboardingView = ({children, config}: OnboardingViewProps) => {
     return <div>
         {children}
-        <div className="flex fixed w-full bottom-4">
-            <ContinueButton className="mx-auto w-96" onClick={config.onContinueClick}/>
+        <div className="fixed flex items-stretch justify-stretch w-full bottom-0">
+            <ContinueButton className="grow m-4" onClick={config.onContinueClick}/>
         </div>
     </div>
 }
