@@ -46,7 +46,8 @@ export const RootView = () => {
                         dispatch(updateView('SELECT_COMMUTING_PREFERENCES'))
                     },
                     title: 'Hey! Tell us what are you looking for',
-                    subTitle: 'It’s fine to select both'
+                    subTitle: 'It’s fine to select both',
+                    hideBackButton: true
                 }
             case 'SELECT_COMMUTING_PREFERENCES':
                 return {
