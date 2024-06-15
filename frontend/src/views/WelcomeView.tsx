@@ -48,7 +48,6 @@ export const WelcomeView = () => {
 
   const onContinueClick = () => {
     dispatch(updateView('SELECT_COMMUTING_PREFERENCES'));
-    dispatch(updatePayload({}));
   };
 
   return (
@@ -76,6 +75,11 @@ const Button = ({ text, ridePreference }: ButtonProps) => {
   const [isButtonClicked, setIsButtonClicked] = useState<boolean>(false);
   const handleClick = () => {
     setIsButtonClicked(!isButtonClicked);
+    dispatch(
+      updateRidePreferences({
+        ridePreferencesFields: [ridePreference],
+      }),
+    );
   };
 
   useEffect(() => {

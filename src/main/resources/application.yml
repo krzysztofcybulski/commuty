@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: commuty
+
+oauth:
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzWY+X55fWA7ZHy+40ksFn5qEQwo36PwpIAMIwRez8H2hQB50FcM55BISIcgFmXmC6FUSf4BbzFc6hLY87b3sde2L/5SbQ4S1ucBXZyhavjpDqIiI2woHXKlLNfT94xxuAkndnFjdaSNztX77uTlpfn2YxPZpoTXdszFicknLsgJdgDhLjImDTDb7COpfwURI9jEvEEJ5BmKimkJgINB6UzKHr7qJJbr45aTosX+9QYT20OBc34tyCMBPbj/by2ZCmCiZFjFE0IaNzfW3WkIVQZk6T2CvrqWznZzLUUXIGYuTqvXCwyJqqWaFuVbVvY5C6qoOQYAdVtwpPPI8D4UUKwIDAQAB
+  issuer: https://ethical-javelin-56.clerk.accounts.dev

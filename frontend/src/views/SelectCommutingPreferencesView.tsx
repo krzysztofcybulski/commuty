@@ -9,6 +9,7 @@ export const SelectCommutingPreferencesView = () => {
 
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+        id: '982eaad930f4790c',
         libraries: ["places"]
     });
 
@@ -41,6 +42,7 @@ export const SelectCommutingPreferencesView = () => {
     const options = {
         disableDefaultUI: true,
         gestureHandling: 'greedy',
+        mapId: 'fbd0e4c5778bb4b3'
     };
 
     const center = {
