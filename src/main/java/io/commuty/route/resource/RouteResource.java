@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.groupingBy;
@@ -84,12 +85,15 @@ public class RouteResource {
         final var routes = routeRepository.findRoutesFor(authentication.getName());
         final var sortedRoutes = new ArrayList<>(routes);
         sortedRoutes.sort(comparingInt(route -> route.hour().getHour())); // simplification
+        final var days = sortedRoutes.stream()
+                .map(Route::day)
+                .collect(Collectors.toSet());
         final var firstPartRoute = routes.getFirst();
         final var lastPartRoute = routes.getLast();
         final var routeWithAddress = new RestMatchedCommuteRouteWithAddress(
                 RestAddress.restAddressFrom(firstPartRoute.from()),
                 RestAddress.restAddressFrom(firstPartRoute.to()),
-                firstPartRoute.day(),
+                days,
                 firstPartRoute.hour(),
                 lastPartRoute.hour()
         );
