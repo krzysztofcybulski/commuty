@@ -7,8 +7,7 @@ export const useSaveUserData = () => {
     const dispatch = useAppDispatch()
 
     return (user: UserResource | null | undefined) => {
-        console.log("fetching user data...")
-        if (user) {
+        if (user !== undefined && user !== null) {
             dispatch(updateUser({
                 name: user.fullName!,
                 email: user.emailAddresses[0].emailAddress

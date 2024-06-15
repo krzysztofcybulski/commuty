@@ -26,5 +26,7 @@ export const RootView = () => {
         }
     };
 
-    return <div className="max-w-max">{getView()}</div>;
+    return <div className="max-w-max">
+        {getView()}
+    </div>;
 };
