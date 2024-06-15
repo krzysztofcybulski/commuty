@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {RootState} from "./store.ts";
 
-type ViewType = 'WELCOME'
+type ViewType = 'WELCOME' | 'SELECT_COMMUTING_PREFERENCES'
 
 export interface AppState {
     view: ViewType;
 }
 
 const initialState: AppState = {
-    view: 'WELCOME',
+    view: 'SELECT_COMMUTING_PREFERENCES',
 }
 
 export const appReducer = createSlice({
