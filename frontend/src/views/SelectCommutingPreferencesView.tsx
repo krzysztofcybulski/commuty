@@ -1,10 +1,9 @@
 import {Autocomplete, DirectionsRenderer, GoogleMap, useLoadScript} from "@react-google-maps/api";
 import {TypographyH2} from "../components/TypographyH2.tsx";
 import {TypographyH4} from "../components/TypographyH4.tsx";
-import {SimpleInput} from "../components/Input.tsx";
 import {Point, useFindRoute} from "../hooks/useFindRoute.ts";
 import {useEffect, useState} from "react";
-import {updateAddressFrom, updateAddressTo} from "../store/appReducer.ts";
+import {updateAddressFrom, updateAddressTo, updateView} from "../store/appReducer.ts";
 import {useAppDispatch} from "../store/store.ts";
 import {ContinueButton} from "../components/ContinueButton.tsx";
 
@@ -69,6 +68,10 @@ export const SelectCommutingPreferencesView = () => {
         dispatch(updateAddressTo(point))
     };
 
+    const onContinueClick = () => {
+        dispatch(updateView('WHEN_YOU_ARE_GOING'))
+    }
+
     return (
         <div className="flex-col max-h-full">
             <div style={{height: '50vh'}} className="p-8">
@@ -97,8 +100,7 @@ export const SelectCommutingPreferencesView = () => {
                 </div>
             </div>
             <div>
-                <ContinueButton onClick={() => {}}>
-                </ContinueButton>
+                <ContinueButton onClick={onContinueClick}/>
                 <GoogleMap
                     mapContainerStyle={{
                         width: '100vw',

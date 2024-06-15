@@ -5,6 +5,7 @@ import { useSaveUserData } from '../hooks/useSaveUserData.ts';
 import { useAppSelector } from '../store/store.ts';
 import { selectView } from '../store/appReducer.ts';
 import { SelectCommutingPreferencesView } from './SelectCommutingPreferencesView.tsx';
+import {WhenYouAreGoingView} from "./WhenYouAreGoingView.tsx";
 
 export const RootView = () => {
   const { user } = useUser();
@@ -21,6 +22,8 @@ export const RootView = () => {
         return <WelcomeView></WelcomeView>;
       case 'SELECT_COMMUTING_PREFERENCES':
         return <SelectCommutingPreferencesView></SelectCommutingPreferencesView>;
+      case 'WHEN_YOU_ARE_GOING':
+        return <WhenYouAreGoingView></WhenYouAreGoingView>;
       default:
         return '';
     }

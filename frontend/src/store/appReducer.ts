@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store.ts';
 import {Point} from "../hooks/useFindRoute.ts";
 
-type ViewType = 'WELCOME' | 'SELECT_COMMUTING_PREFERENCES';
+type ViewType = 'WELCOME' | 'SELECT_COMMUTING_PREFERENCES' | 'WHEN_YOU_ARE_GOING';
 
 export enum RidePreference {
   DRIVER = 'DRIVER',
