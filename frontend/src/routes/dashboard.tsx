@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function DashboardPage() {
   return (
@@ -7,8 +7,9 @@ export default function DashboardPage() {
       <p>This is a protected page.</p>
 
       <ul>
-        <li><Link to="/dashboard/invoices">Invoices</Link></li>
-        <li><Link to="/">Return to index</Link></li>
+        <li>
+          <Link to="/">Return to index</Link>
+        </li>
       </ul>
     </>
   );
