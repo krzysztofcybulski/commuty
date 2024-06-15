@@ -4,6 +4,7 @@ import {TypographyH3} from "../components/TypographyH3.tsx";
 import {useCommutyApi} from "../client/useCommutyApi.ts";
 import {useEffect} from "react";
 import {CommutyApiRequest} from "../client/CommutyApiRequest.ts";
+import {TypographyH4} from "../components/TypographyH4.tsx";
 
 export const exampleRequest: CommutyApiRequest = {
     "user": {
@@ -50,7 +51,7 @@ export const WelcomeView = () => {
 
     return <div className="container mx-auto p-8">
         <TypographyH2 text={"Hey! Tell us what are you looking for"}/>
-        <TypographyH3 text={"It’s fine to select both"}/>
+        <TypographyH4 text={"It’s fine to select both"}/>
         <div>
             <p>I can take people in my car</p>
         </div>
