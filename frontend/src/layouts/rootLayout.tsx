@@ -16,10 +16,10 @@ export default function RootLayout() {
       routerReplace={(to) => navigate(to, { replace: true })}
       publishableKey={PUBLISHABLE_KEY}
     >
-      <header className="header">
+      {/* <header className="header">
         <div>
           <div>
-            <p>Clerk + React + React Router App</p>
+            <p>Commuty xD</p>
           </div>
           <SignedIn>
             <UserButton afterSignOutUrl='/sign-in' />
@@ -28,7 +28,28 @@ export default function RootLayout() {
             <Link to="/sign-in">Sign In</Link>
           </SignedOut>
         </div>
-      </header>
+      </header> */}
+      <div className="bg-gray-100">
+        <div className="bg-blue-500 p-4">
+          <div className="container mx-auto flex justify-between">
+            <div className="text-white text-lg font-semibold">
+              <Link to='/'>
+                Commuty
+              </Link>
+            </div>
+            <div className="space-x-4">
+              <Link to="/" className="text-white hover:text-gray-200">Home</Link>
+              <Link to="/about" className="text-white hover:text-gray-200">About</Link>
+              <SignedOut>
+                <Link to="/sign-in">Sign In</Link>
+              </SignedOut>
+              <SignedIn>
+                <UserButton afterSignOutUrl='/sign-in' />
+              </SignedIn>
+            </div>
+          </div>
+        </div>
+      </div>
       <main>
         <Outlet />
       </main>

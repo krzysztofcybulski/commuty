@@ -8,12 +8,14 @@ import IndexPage from './routes'
 import SignInPage from './routes/signIn'
 import SignUpPage from './routes/signUp'
 import DashboardPage from './routes/dashboard'
+import About from './routes/about'
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
       { path: "/", element: <IndexPage /> },
+      { path: '/about/*', element: <About />},
       { path: "/sign-in/*", element: <SignInPage /> },
       { path: "/sign-up/*", element: <SignUpPage /> },
       {
