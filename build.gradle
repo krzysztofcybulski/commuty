@@ -31,3 +31,12 @@ tasks.named('test') {
 application {
 	mainClass = 'io.commuty.CommutyApplication'
 }
+
+jar {
+	manifest {
+		attributes(
+				'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+				'Main-Class': 'io.commuty.CommutyApplication'
+		)
+	}
+}
