@@ -9,7 +9,6 @@ export interface ViewConfig {
   title?: string;
   subTitle?: string;
   buttonDisabled?: boolean;
-  shouldShowBackButton?: boolean;
 }
 
 export interface OnboardingViewProps {
@@ -18,17 +17,16 @@ export interface OnboardingViewProps {
 }
 
 export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
-  const { title, subTitle, buttonDisabled, shouldShowBackButton = true, onContinueClick } = config;
   return (
     <div className="w-full">
       <div className="flex flex-col items-stretch justify-stretch w-full top-0 p-4">
-        {shouldShowBackButton && <BackButton view="WELCOME" />}
-        <TypographyH1 text={title || ''} className="font-medium text-xl" />
-        <TypographyH2 text={subTitle || ''} className="mt-2 font-light text-base" />
+        <BackButton view="WELCOME" />
+        <TypographyH1 text={config.title || ''} className="font-medium text-xl" />
+        <TypographyH2 text={config.subTitle || ''} className="mt-2 font-light text-base" />
       </div>
       {children}
       <div className="fixed flex items-stretch justify-stretch w-full bottom-0">
-        {!buttonDisabled && <ContinueButton className="grow m-4" onClick={onContinueClick} />}
+        {!config.buttonDisabled && <ContinueButton className="grow m-4" onClick={config.onContinueClick} />}
       </div>
     </div>
   );
