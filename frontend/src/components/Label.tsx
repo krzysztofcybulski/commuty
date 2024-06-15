@@ -1,15 +1,17 @@
-import { ReactNode } from 'react';
+import {ReactNode} from 'react';
+import {TypographyH4} from "./TypographyH4.tsx";
 
 interface LabelProps {
-  title: string;
-  htmlFor?: string;
-  children?: ReactNode;
+    title: string;
+    children?: ReactNode;
+    className?: string
 }
 
-export const Label = ({ title, htmlFor, children }: LabelProps) => {
-  return (
-    <label htmlFor={htmlFor} title={title}>
-      {children}
-    </label>
-  );
+export const Label = ({title, children, className}: LabelProps) => {
+    return (
+        <div>
+            <TypographyH4 className={className} text={title}></TypographyH4>
+            {children}
+        </div>
+    );
 };

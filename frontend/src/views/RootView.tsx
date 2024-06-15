@@ -7,6 +7,7 @@ import {selectView, updateView} from '../store/appReducer.ts';
 import {SelectCommutingPreferencesView} from './SelectCommutingPreferencesView.tsx';
 import {WhenYouAreGoingView} from "./WhenYouAreGoingView.tsx";
 import {OnboardingView, ViewConfig} from "../components/OnboardingView.tsx";
+import {SetYourNameView} from "./SetYourNameView.tsx";
 
 export const RootView = () => {
     const {user} = useUser();
@@ -26,8 +27,8 @@ export const RootView = () => {
                 return <SelectCommutingPreferencesView></SelectCommutingPreferencesView>;
             case 'WHEN_YOU_ARE_GOING':
                 return <WhenYouAreGoingView></WhenYouAreGoingView>;
-            default:
-                return '';
+            case 'SET_YOUR_NAME':
+                return <SetYourNameView></SetYourNameView>;
         }
     };
 
@@ -52,10 +53,16 @@ export const RootView = () => {
             case 'WHEN_YOU_ARE_GOING':
                 return {
                     onContinueClick: () => {
-                        dispatch(updateView('WHEN_YOU_ARE_GOING'))
+                        dispatch(updateView('SET_YOUR_NAME'))
                     },
                     title: 'Where are you commuting?',
                     subTitle: 'It’s fine to select both'
+                }
+            case 'SET_YOUR_NAME':
+                return {
+                    onContinueClick: () => {
+                        dispatch(updateView('WHEN_YOU_ARE_GOING'))
+                    }
                 }
         }
     }
