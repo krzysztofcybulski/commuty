@@ -12,14 +12,12 @@ if (!PUBLISHABLE_KEY) {
 
 export const App = () => {
   return (
-    <main>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-            <RootView></RootView>
-          </ClerkProvider>
-        </PersistGate>
-      </Provider>
-    </main>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+          <RootView />
+        </ClerkProvider>
+      </PersistGate>
+    </Provider>
   );
 };
