@@ -55,7 +55,7 @@ export const WelcomeView = () => {
       <div className="container mx-auto p-8 flex flex-col min-h-screen">
         <div className="flex flex-col items-start">
           <TypographyH1 text={'Hey! Tell us what are you looking for'} className="font-medium text-xl" />
-          <TypographyH2 text={'It’s fine to select both'} className="mb-4 font-light text-base"/>
+          <TypographyH2 text={'It’s fine to select both'} className="mb-4 font-extralight text-base"/>
         </div>
         <div className="flex-grow flex flex-col items-stretch justify-center">
           <div className="flex flex-col mb-4">
