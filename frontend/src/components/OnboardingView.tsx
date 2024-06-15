@@ -17,7 +17,7 @@ export interface OnboardingViewProps {
 
 export const OnboardingView = ({children, config}: OnboardingViewProps) => {
     return <div className="w-full">
-        <div className="fixed flex flex-col items-stretch justify-stretch w-full top-0 p-4">
+        <div className="flex flex-col items-stretch justify-stretch w-full top-0 p-4">
             <BackButton view="WELCOME"/>
             <TypographyH1 text={config.title || ""} className="font-medium text-xl"/>
             <TypographyH2 text={config.subTitle || ""} className="mt-2 font-light text-base"/>
