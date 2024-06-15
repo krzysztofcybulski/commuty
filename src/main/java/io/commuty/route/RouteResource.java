@@ -19,10 +19,10 @@ public class RouteResource {
     }
 
     @PostMapping
-    public UUID create(@RequestBody Route route) {
+    public RouteId create(@RequestBody Route route) {
         final var routeId = randomUUID();
         routesById.put(routeId, route);
-        return routeId;
+        return new RouteId(routeId);
     }
 
 }
