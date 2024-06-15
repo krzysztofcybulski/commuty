@@ -9,7 +9,12 @@ import static io.commuty.user.User.Builder.user;
 @Repository
 public class InMemoryUserRepository implements UserRepository {
 
-    private final HashMap<UserId, User> USERS = new HashMap<>();
+    private final HashMap<String, User> USERS = new HashMap<>();
+
+    @Override
+    public User get(String userId) {
+        return USERS.get(userId);
+    }
 
     @Override
     public void save(User user) {
@@ -17,7 +22,7 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public void updateFor(UserId userId, UserUpdate userUpdate) {
+    public void updateFor(String userId, UserUpdate userUpdate) {
         final var user = USERS.get(userId);
         final var updated = user()
                 .id(user.id())

@@ -4,7 +4,6 @@ import io.commuty.route.resource.RestAddress;
 import io.commuty.route.resource.RestRidePreference;
 import io.commuty.route.resource.RestRoutePreference;
 import io.commuty.route.resource.RestTimePreference;
-import io.commuty.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,7 +25,7 @@ public class RouteCreateFlow {
         this.routeRepository = routeRepository;
     }
 
-    public void createFor(UserId userId, RestRoutePreference routePreference) {
+    public void createFor(String userId, RestRoutePreference routePreference) {
         final var ridePreference = ridePreferenceFrom(routePreference.ridePreferences());
         final var routes = routePreference.commutingRoutes().stream()
                 .flatMap(commuteRoute -> commuteRoute.timePreferences().stream()
@@ -43,7 +42,7 @@ public class RouteCreateFlow {
         routeRepository.save(routes);
     }
 
-    private List<Route> createRoutesCombinationsForTimeRange(UserId userId, RestAddress from, RestAddress to, RestTimePreference timePreference, RidePreference ridePreference) {
+    private List<Route> createRoutesCombinationsForTimeRange(String userId, RestAddress from, RestAddress to, RestTimePreference timePreference, RidePreference ridePreference) {
         final DayOfWeek day = timePreference.day();
         final LocalTime departureTime = LocalTime.parse(timePreference.timeRange().departureTime(), formatter);
         final LocalTime returnTime = LocalTime.parse(timePreference.timeRange().returnTime(), formatter);
@@ -53,7 +52,7 @@ public class RouteCreateFlow {
         );
     }
 
-    private Route createRouteFor(UserId userId, RestAddress from, RestAddress to, DayOfWeek day, LocalTime hour, RidePreference ridePreference) {
+    private Route createRouteFor(String userId, RestAddress from, RestAddress to, DayOfWeek day, LocalTime hour, RidePreference ridePreference) {
         return new Route(userId, addressFrom(from), addressFrom(to), day, hour, ridePreference);
     }
 

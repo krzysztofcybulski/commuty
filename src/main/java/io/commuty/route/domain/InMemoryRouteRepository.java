@@ -1,6 +1,5 @@
 package io.commuty.route.domain;
 
-import io.commuty.user.UserId;
 import org.springframework.stereotype.Repository;
 
 import java.time.DayOfWeek;
@@ -22,7 +21,7 @@ public class InMemoryRouteRepository implements RouteRepository {
     }
 
     @Override
-    public List<Route> findRoutesFor(UserId userId) {
+    public List<Route> findRoutesFor(String userId) {
         return ROUTES.stream()
                 .filter(route -> route.user().equals(userId))
                 .toList();

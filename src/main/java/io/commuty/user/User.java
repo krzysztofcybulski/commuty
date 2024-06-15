@@ -1,20 +1,19 @@
 package io.commuty.user;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public record User(UserId id, String name, String photoUrl, String description, Set<String> tags) {
+public record User(String id, String name, String photoUrl, String description, Set<String> tags) {
 
     public static class Builder {
 
-        private UserId id;
+        private String id;
         private String name;
         private String photoUrl;
         private String description;
         private Set<String> tags = new HashSet<>();
 
-        private Builder(UserId id, String name, String photoUrl, String description, Set<String> tags) {
+        private Builder(String id, String name, String photoUrl, String description, Set<String> tags) {
             this.name = name;
             this.photoUrl = photoUrl;
             this.description = description;
@@ -28,7 +27,7 @@ public record User(UserId id, String name, String photoUrl, String description, 
         private Builder() {
         }
 
-        public Builder id(UserId id) {
+        public Builder id(String id) {
             this.id = id;
             return this;
         }

@@ -1,6 +1,5 @@
 package io.commuty.route.domain;
 
-import io.commuty.user.UserId;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -16,7 +15,7 @@ public class Matcher {
         this.routeRepository = routeRepository;
     }
 
-    public List<Route> matchFor(UserId authenticated) {
+    public List<Route> matchFor(String authenticated) {
         final var routes = routeRepository.findRoutesFor(authenticated);
         return routes.stream()
                 .map(route -> List.of(matchRouteFor(route.from(), route.day(), route.hour(), route.ridePreference()),

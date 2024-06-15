@@ -12,11 +12,11 @@ import io.commuty.route.resource.preference.RestCommutingInfoPreference;
 import io.commuty.route.resource.preference.RestMatchedCommuteRouteWithAddress;
 import io.commuty.route.resource.preference.RestRoutePreferences;
 import io.commuty.user.User;
-import io.commuty.user.UserId;
 import io.commuty.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,9 +33,6 @@ public class RouteResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(RouteResource.class);
 
-    private static final UserId creatorUserId = UserId.of("811a26c2-6e64-4309-83b3-642cbf4d6a8f");
-    private static final UserId matcherUserId = UserId.of("af7c93e4-13d7-42cc-b990-39ddccf5cfd9");
-
     private final RouteCreateFlow routeCreateFlow;
     private final Matcher matcher;
     private final RouteRepository routeRepository;
@@ -50,15 +47,13 @@ public class RouteResource {
 
 
     @GetMapping
-    public MatchedRoutes getMatchedRoutes() {
-        final var authenticated = creatorUserId; // TODO extract userId from token
-        final var matchedRoutes = matcher.matchFor(authenticated);
-        final var user = new User(authenticated, "Tomek", "", "Looking for a passenger", Set.of("#rockmusic", "#talkative"));
+    public MatchedRoutes getMatchedRoutes(Authentication authentication) {
+        final var matchedRoutes = matcher.matchFor(authentication.getName());
         final var matchedRouteByUserId = matchedRoutes.stream()
                 .collect(groupingBy(Route::user));
         final var matches = matchedRouteByUserId.entrySet().stream()
                 .map(matchedRouteByUserIdEntry -> {
-                    final var userId = matchedRouteByUserIdEntry.getKey();
+                    final var user = userRepository.get(matchedRouteByUserIdEntry.getKey());
                     final var matchedRoutesByDay = matchedRouteByUserIdEntry.getValue().stream()
                             .collect(groupingBy(Route::day));
                     final var routes = matchedRoutesByDay.entrySet().stream()
@@ -77,18 +72,16 @@ public class RouteResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody RestRoutePreference routePreference) {
+    public void create(@RequestBody RestRoutePreference routePreference, Authentication authentication) {
         LOG.info("Create route request");
-        final var authenticated = creatorUserId; // TODO extract userId from token
         final var user = routePreference.user();
-        userRepository.save(new User(authenticated, user.name(), "", "", Set.of()));
-        routeCreateFlow.createFor(authenticated, routePreference);
+        userRepository.save(new User(authentication.getName(), user.name(), "", "", Set.of()));
+        routeCreateFlow.createFor(authentication.getName(), routePreference);
     }
 
     @GetMapping("/preferences")
-    public RestRoutePreferences getRoutesPreferences() {
-        final var authenticated = creatorUserId; // TODO extract userId from token
-        final var routes = routeRepository.findRoutesFor(authenticated);
+    public RestRoutePreferences getRoutesPreferences(Authentication authentication) {
+        final var routes = routeRepository.findRoutesFor(authentication.getName());
         final var sortedRoutes = new ArrayList<>(routes);
         sortedRoutes.sort(comparingInt(route -> route.hour().getHour())); // simplification
         final var firstPartRoute = routes.getFirst();
@@ -106,8 +99,10 @@ public class RouteResource {
 
     @PostMapping("/v2")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createV2(@RequestBody RestRoutePreference routePreference) {
+    public void createV2(@RequestBody RestRoutePreference routePreference, Authentication authentication) {
         LOG.info("Create route request");
-        routeCreateFlow.createFor(matcherUserId, routePreference);
+        final var user = routePreference.user();
+        userRepository.save(new User(authentication.getName(), user.name(), "", "", Set.of()));
+        routeCreateFlow.createFor(authentication.getName(), routePreference);
     }
 }

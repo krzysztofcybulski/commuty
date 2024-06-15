@@ -2,7 +2,9 @@ package io.commuty.user;
 
 public interface UserRepository {
 
+    User get(String userId);
+
     void save(User user);
 
-    void updateFor(UserId userId, UserUpdate userUpdate);
+    void updateFor(String userId, UserUpdate userUpdate);
 }
