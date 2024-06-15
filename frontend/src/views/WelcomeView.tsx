@@ -2,7 +2,6 @@ import { TypographyH2 } from '../components/TypographyH2.tsx';
 import { useCommutyApi } from '../client/useCommutyApi.ts';
 import { useEffect, useState } from 'react';
 import { CommutyApiRequest } from '../client/CommutyApiRequest.ts';
-import { TypographyH4 } from '../components/TypographyH4.tsx';
 import { ContinueButton } from '../components/ContinueButton.tsx';
 import { useAppDispatch } from '../store/store.ts';
 import { RidePreference, updateRidePreferences, updateView } from '../store/appReducer.ts';
