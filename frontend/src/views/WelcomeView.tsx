@@ -1,6 +1,5 @@
 import {Button} from "../components/Button.tsx";
 import {TypographyH2} from "../components/TypographyH2.tsx";
-import {TypographyH3} from "../components/TypographyH3.tsx";
 import {useCommutyApi} from "../client/useCommutyApi.ts";
 import {useEffect} from "react";
 import {CommutyApiRequest} from "../client/CommutyApiRequest.ts";
