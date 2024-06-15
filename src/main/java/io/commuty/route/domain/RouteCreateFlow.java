@@ -1,8 +1,9 @@
 package io.commuty.route.domain;
 
 import io.commuty.route.resource.RestAddress;
-import io.commuty.route.resource.RoutePreference;
-import io.commuty.route.resource.TimePreference;
+import io.commuty.route.resource.RestRidePreference;
+import io.commuty.route.resource.RestRoutePreference;
+import io.commuty.route.resource.RestTimePreference;
 import io.commuty.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +26,16 @@ public class RouteCreateFlow {
         this.routeRepository = routeRepository;
     }
 
-    public void createFor(UserId userId, RoutePreference routePreference) {
+    public void createFor(UserId userId, RestRoutePreference routePreference) {
+        final var ridePreference = ridePreferenceFrom(routePreference.ridePreferences());
         final var routes = routePreference.commutingRoutes().stream()
                 .flatMap(commuteRoute -> commuteRoute.timePreferences().stream()
                         .map(timePreference -> createRoutesCombinationsForTimeRange(
                                 userId,
                                 commuteRoute.addressFrom(),
                                 commuteRoute.addressTo(),
-                                timePreference
+                                timePreference,
+                                ridePreference
                         )))
                 .flatMap(List::stream)
                 .toList();
@@ -40,21 +43,28 @@ public class RouteCreateFlow {
         routeRepository.save(routes);
     }
 
-    private List<Route> createRoutesCombinationsForTimeRange(UserId userId, RestAddress from, RestAddress to, TimePreference timePreference) {
+    private List<Route> createRoutesCombinationsForTimeRange(UserId userId, RestAddress from, RestAddress to, RestTimePreference timePreference, RidePreference ridePreference) {
         final DayOfWeek day = timePreference.day();
         final LocalTime departureTime = LocalTime.parse(timePreference.timeRange().departureTime(), formatter);
         final LocalTime returnTime = LocalTime.parse(timePreference.timeRange().returnTime(), formatter);
         return List.of(
-                createRouteFor(userId, from, to, day, departureTime),
-                createRouteFor(userId, to, from, day, returnTime)
+                createRouteFor(userId, from, to, day, departureTime, ridePreference),
+                createRouteFor(userId, to, from, day, returnTime, ridePreference)
         );
     }
 
-    private Route createRouteFor(UserId userId, RestAddress from, RestAddress to, DayOfWeek day, LocalTime hour) {
-        return new Route(userId, addressFrom(from), addressFrom(to), day, hour);
+    private Route createRouteFor(UserId userId, RestAddress from, RestAddress to, DayOfWeek day, LocalTime hour, RidePreference ridePreference) {
+        return new Route(userId, addressFrom(from), addressFrom(to), day, hour, ridePreference);
     }
 
     private Address addressFrom(RestAddress address) {
         return new Address(address.longitude(), address.latitude(), address.levelOfDetail());
+    }
+
+    private RidePreference ridePreferenceFrom(List<RestRidePreference> restRidePreferences) {
+        if (restRidePreferences.size() == 2) return RidePreference.BOTH;
+        if (restRidePreferences.size() == 1)
+            return restRidePreferences.getFirst() == RestRidePreference.DRIVER ? RidePreference.DRIVER : RidePreference.PASSENGER;
+        throw new IllegalStateException("Improper ride preference");
     }
 }

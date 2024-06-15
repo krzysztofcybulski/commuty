@@ -11,6 +11,7 @@ import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/routes")
+@CrossOrigin
 public class RouteResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(RouteResource.class);
@@ -29,7 +30,7 @@ public class RouteResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody RoutePreference routePreference) {
+    public void create(@RequestBody RestRoutePreference routePreference) {
         LOG.info("Create route request");
         routeCreateFlow.createFor(UserId.of(randomUUID()), routePreference);
     }

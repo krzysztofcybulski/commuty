@@ -1,5 +1,5 @@
 package io.commuty.route.resource;
 
-public enum RidePreference {
+public enum RestRidePreference {
     DRIVER, PASSENGER
 }

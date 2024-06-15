@@ -1,7 +1,6 @@
 package io.commuty.route.domain;
 
 import io.commuty.user.UserId;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
