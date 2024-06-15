@@ -13,20 +13,15 @@ import io.commuty.route.resource.preference.RestMatchedCommuteRouteWithAddress;
 import io.commuty.route.resource.preference.RestRoutePreferences;
 import io.commuty.user.User;
 import io.commuty.user.UserId;
+import io.commuty.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.groupingBy;
@@ -38,17 +33,19 @@ public class RouteResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(RouteResource.class);
 
-    private static final UserId creatorUserId = UserId.of(UUID.fromString("811a26c2-6e64-4309-83b3-642cbf4d6a8f"));
-    private static final UserId matcherUserId = UserId.of(UUID.fromString("af7c93e4-13d7-42cc-b990-39ddccf5cfd9"));
+    private static final UserId creatorUserId = UserId.of("811a26c2-6e64-4309-83b3-642cbf4d6a8f");
+    private static final UserId matcherUserId = UserId.of("af7c93e4-13d7-42cc-b990-39ddccf5cfd9");
 
     private final RouteCreateFlow routeCreateFlow;
     private final Matcher matcher;
     private final RouteRepository routeRepository;
+    private final UserRepository userRepository;
 
-    public RouteResource(RouteCreateFlow routeCreateFlow, Matcher matcher, RouteRepository routeRepository) {
+    public RouteResource(RouteCreateFlow routeCreateFlow, Matcher matcher, RouteRepository routeRepository, UserRepository userRepository) {
         this.routeCreateFlow = routeCreateFlow;
         this.matcher = matcher;
         this.routeRepository = routeRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -56,7 +53,7 @@ public class RouteResource {
     public MatchedRoutes getMatchedRoutes() {
         final var authenticated = creatorUserId; // TODO extract userId from token
         final var matchedRoutes = matcher.matchFor(authenticated);
-        final var user = new User(authenticated, "Tomek", "", "Looking for a passenger", List.of("#rockmusic", "#talkative"));
+        final var user = new User(authenticated, "Tomek", "", "Looking for a passenger", Set.of("#rockmusic", "#talkative"));
         final var matchedRouteByUserId = matchedRoutes.stream()
                 .collect(groupingBy(Route::user));
         final var matches = matchedRouteByUserId.entrySet().stream()
@@ -82,7 +79,10 @@ public class RouteResource {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody RestRoutePreference routePreference) {
         LOG.info("Create route request");
-        routeCreateFlow.createFor(creatorUserId, routePreference);
+        final var authenticated = creatorUserId; // TODO extract userId from token
+        final var user = routePreference.user();
+        userRepository.save(new User(authenticated, user.name(), "", "", Set.of()));
+        routeCreateFlow.createFor(authenticated, routePreference);
     }
 
     @GetMapping("/preferences")

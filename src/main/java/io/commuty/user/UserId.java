@@ -2,9 +2,9 @@ package io.commuty.user;
 
 import java.util.UUID;
 
-public record UserId(UUID userId) {
+public record UserId(String userId) {
 
-    public static UserId of(UUID userId) {
+    public static UserId of(String userId) {
         return new UserId(userId);
     }
 }
