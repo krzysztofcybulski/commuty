@@ -5,7 +5,7 @@ import { CommutyApiRequest } from '../client/CommutyApiRequest.ts';
 import { TypographyH4 } from '../components/TypographyH4.tsx';
 import { ContinueButton } from '../components/ContinueButton.tsx';
 import { useAppDispatch } from '../store/store.ts';
-import { RidePreference, updatePayload, updateRidePreferences, updateView } from '../store/appReducer.ts';
+import { RidePreference, updateRidePreferences, updateView } from '../store/appReducer.ts';
 
 export const exampleRequest: CommutyApiRequest = {
   user: {
@@ -58,8 +58,8 @@ export const WelcomeView = () => {
         <TypographyH4 text={'It’s fine to select both'} className="mb-4" />
       </div>
       <div className="flex flex-col mb-4">
-        <Button text="I can take people in my car" />
-        <Button text="I would like to be a pasanger" />
+        <Button ridePreference={RidePreference.DRIVER} text="I can take people in my car" />
+        <Button ridePreference={RidePreference.PASSENGER} text="I would like to be a pasanger" />
       </div>
       <ContinueButton onClick={onContinueClick} />
     </div>
@@ -76,12 +76,15 @@ const Button = ({ text, ridePreference }: ButtonProps) => {
   const [isButtonClicked, setIsButtonClicked] = useState<boolean>(false);
   const handleClick = () => {
     setIsButtonClicked(!isButtonClicked);
+  };
+
+  useEffect(() => {
     dispatch(
       updateRidePreferences({
-        ridePreferencesFields: [ridePreference],
+        [ridePreference]: isButtonClicked,
       }),
     );
-  };
+  }, [isButtonClicked]);
 
   return (
     <div
