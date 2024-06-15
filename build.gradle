@@ -33,11 +33,13 @@ application {
 }
 
 jar {
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	enabled = false
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 	manifest {
 		attributes 'Main-Class': application.mainClass
 	}
+	dependsOn configurations.runtimeClasspath
 	from {
-		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+		configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
 	}
 }
