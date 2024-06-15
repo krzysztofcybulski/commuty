@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -33,11 +34,13 @@ application {
 }
 
 jar {
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	enabled = false
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 	manifest {
 		attributes 'Main-Class': application.mainClass
 	}
+	dependsOn configurations.runtimeClasspath
 	from {
-		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+		configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
 	}
 }

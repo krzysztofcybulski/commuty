@@ -1,10 +1,10 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react'
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key")
+  throw new Error('Missing Publishable Key');
 }
 
 export default function RootLayout() {
@@ -33,18 +33,20 @@ export default function RootLayout() {
         <div className="bg-blue-500 p-4">
           <div className="container mx-auto flex justify-between">
             <div className="text-white text-lg font-semibold">
-              <Link to='/'>
-                Commuty
-              </Link>
+              <Link to="/">Commuty</Link>
             </div>
             <div className="space-x-4">
-              <Link to="/" className="text-white hover:text-gray-200">Home</Link>
-              <Link to="/about" className="text-white hover:text-gray-200">About</Link>
+              <Link to="/" className="text-white hover:text-gray-200">
+                Home
+              </Link>
+              <Link to="/about" className="text-white hover:text-gray-200">
+                About
+              </Link>
               <SignedOut>
                 <Link to="/sign-in">Sign In</Link>
               </SignedOut>
               <SignedIn>
-                <UserButton afterSignOutUrl='/sign-in' />
+                <UserButton afterSignOutUrl="/sign-in" />
               </SignedIn>
             </div>
           </div>
@@ -54,5 +56,5 @@ export default function RootLayout() {
         <Outlet />
       </main>
     </ClerkProvider>
-  )
+  );
 }
