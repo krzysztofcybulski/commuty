@@ -21,7 +21,7 @@ public class WebConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
+                .cors(AbstractHttpConfigurer::disable)
 //                .cors(cors -> cors.configurationSource(request -> {
 //                    var corsConfiguration = new CorsConfiguration();
 //                    corsConfiguration.setAllowedOrigins(List.of("commuty.netlify.app", "localhost:5173"));
