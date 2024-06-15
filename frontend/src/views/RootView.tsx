@@ -3,20 +3,20 @@ import {useEffect} from 'react';
 import {useUser} from '@clerk/clerk-react';
 import {useSaveUserData} from '../hooks/useSaveUserData.ts';
 import {useAppDispatch, useAppSelector} from '../store/store.ts';
-import {selectView, updateView} from '../store/appReducer.ts';
+import {selectPayload, selectView, updateView} from '../store/appReducer.ts';
 import {SelectCommutingPreferencesView} from './SelectCommutingPreferencesView.tsx';
 import {WhenYouAreGoingView} from "./WhenYouAreGoingView.tsx";
 import {OnboardingView, ViewConfig} from "../components/OnboardingView.tsx";
 import {SetYourNameView} from './SetYourNameView.tsx';
 import {CreateAccountView} from "./CreateAccountView.tsx";
-// import {useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 export const RootView = () => {
     const {user} = useUser();
     const saveUserData = useSaveUserData();
     const view = useAppSelector(selectView);
     const dispatch = useAppDispatch();
-    // const payload = useSelector(selectPayload)
+    const payload = useSelector(selectPayload)
 
     useEffect(() => {
         saveUserData(user);
@@ -72,10 +72,9 @@ export const RootView = () => {
             case 'CREATE_ACCOUNT':
                 return {
                     onContinueClick: () => {
-                        console.log()
                         // dispatch(updateView('HOME_PAGE'))
                     },
-                    buttonDisabled: 'Create Account'
+                    buttonDisabled: true
                 }
             default:
                 return undefined;
