@@ -1,14 +1,15 @@
 import {Link, Outlet} from "react-router-dom";
-import {SignedIn, SignedOut, UserButton} from "@clerk/clerk-react";
-import {useFetchUserData} from "../hooks/useFetchUserData.ts";
+import {SignedIn, SignedOut, UserButton, useUser} from "@clerk/clerk-react";
 import {useEffect} from "react";
+import {useSaveUserData} from "../hooks/useSaveUserData.ts";
 
 export const App = () => {
 
-    const fetchUserData = useFetchUserData()
+    const {user} = useUser()
+    const saveUserData = useSaveUserData()
 
     useEffect(() => {
-        fetchUserData()
+        saveUserData(user)
     }, []);
 
     return <div>
