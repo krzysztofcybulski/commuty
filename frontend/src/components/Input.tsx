@@ -1,11 +1,11 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "../utils/cn";
+import {AnimatePresence, motion} from "framer-motion";
+import {useCallback, useEffect, useRef, useState} from "react";
+import {cn} from "../utils/cn";
 
-export function PlaceholdersAndVanishInput({
-                                               placeholders,
-                                               onChange,
-                                           }: {
+export function SimpleInput({
+                                placeholders,
+                                onChange,
+                            }: {
     placeholders: string[];
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
@@ -72,7 +72,7 @@ export function PlaceholdersAndVanishInput({
             }
         }
 
-        newDataRef.current = newData.map(({ x, y, color }) => ({
+        newDataRef.current = newData.map(({x, y, color}) => ({
             x,
             y,
             r: 1,
@@ -108,7 +108,7 @@ export function PlaceholdersAndVanishInput({
                 if (ctx) {
                     ctx.clearRect(pos, 0, 800, 800);
                     newDataRef.current.forEach((t) => {
-                        const { x: n, y: i, r: s, color: color } = t;
+                        const {x: n, y: i, r: s, color: color} = t;
                         if (n > pos) {
                             ctx.beginPath();
                             ctx.rect(n, i, s, s);
@@ -150,7 +150,7 @@ export function PlaceholdersAndVanishInput({
     return (
         <form
             className={cn(
-                "w-full relative max-w-xl mx-auto bg-white dark:bg-zinc-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
+                "w-full relative max-w-xl mx-auto bg-white dark:bg-zinc-800 h-12 overflow-hidden,_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
                 value && "bg-gray-50"
             )}
             onSubmit={handleSubmit}
@@ -163,6 +163,7 @@ export function PlaceholdersAndVanishInput({
                 ref={canvasRef}
             />
             <input
+                placeholder=""
                 onChange={(e) => {
                     if (!animating) {
                         setValue(e.target.value);
@@ -173,7 +174,7 @@ export function PlaceholdersAndVanishInput({
                 value={value}
                 type="text"
                 className={cn(
-                    "w-full relative text-sm sm:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20",
+                    "w-full relative text-sm sm:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-2 sm:pl-10 pr-20",
                     animating && "text-transparent dark:text-transparent"
                 )}
             />
@@ -199,7 +200,7 @@ export function PlaceholdersAndVanishInput({
                                 duration: 0.3,
                                 ease: "linear",
                             }}
-                            className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
+                            className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-2 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
                         >
                             {placeholders[currentPlaceholder]}
                         </motion.p>
