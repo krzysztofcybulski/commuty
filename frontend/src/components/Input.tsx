@@ -9,8 +9,8 @@ export const Input = ({placeholder, value, onChange}: InputProps) => {
         type="text"
         id="large-input"
         placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        value={value ?? ''}
+        onChange={(e) => onChange(e.target.value ?? '')}
         className="peer h-10 w-full text-gray-900 focus:outline-none"
     />
 }

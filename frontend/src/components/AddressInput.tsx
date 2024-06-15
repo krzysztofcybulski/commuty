@@ -9,7 +9,7 @@ export interface Address {
 
 export interface AddressInputProps {
     children: React.ReactElement,
-    handleAddressChanged: (address: Address, addressName: string) => void;
+    handleAddressChanged: (address: Address) => void;
 }
 
 export const AddressInput = ({children, handleAddressChanged}: AddressInputProps) => {
@@ -36,7 +36,7 @@ export const AddressInput = ({children, handleAddressChanged}: AddressInputProps
     const addressChanged = () => {
         const address = handleAutocompleteChange(addressAutocomplete);
         if (address) {
-            handleAddressChanged(address.point, address.name)
+            handleAddressChanged(address)
         }
     };
 
