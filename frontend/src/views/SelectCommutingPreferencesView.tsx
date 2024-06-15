@@ -2,10 +2,11 @@ import {Autocomplete, DirectionsRenderer, GoogleMap, useLoadScript} from "@react
 import {TypographyH2} from "../components/TypographyH2.tsx";
 import {TypographyH4} from "../components/TypographyH4.tsx";
 import {Point, useFindRoute} from "../hooks/useFindRoute.ts";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {updateAddressFrom, updateAddressTo, updateView} from "../store/appReducer.ts";
 import {useAppDispatch} from "../store/store.ts";
 import {ContinueButton} from "../components/ContinueButton.tsx";
+import {TypographyH1} from "../components/TypographyH1.tsx";
 
 export const SelectCommutingPreferencesView = () => {
 
@@ -75,8 +76,8 @@ export const SelectCommutingPreferencesView = () => {
     return (
         <div className="flex-col max-h-full">
             <div style={{height: '50vh'}} className="p-8">
-                <TypographyH2 text={"Where are you commuting?"}/>
-                <TypographyH4 text={"Don't worry we will keep it private"}/>
+                <TypographyH1 text={"Where are you commuting?"} className="font-medium text-xl" />
+                <TypographyH2 text={"Don't worry we will keep it private"} className="mb-4 font-extralight text-base" />
                 <div className="flex-col space-y-4 pt-16">
                     <TypographyH4 text={"I’m going from"}></TypographyH4>
                     <Autocomplete
@@ -86,7 +87,7 @@ export const SelectCommutingPreferencesView = () => {
 
                         <input type="text" id="large-input"
                                placeholder="Start typing address..."
-                               className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                               className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"/>
                     </Autocomplete>
                     <TypographyH4 text={"To"}></TypographyH4>
                     <Autocomplete
@@ -95,7 +96,7 @@ export const SelectCommutingPreferencesView = () => {
                     >
                         <input type="text" id="large-input"
                                placeholder="Add your work location..."
-                               className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                               className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600"/>
                     </Autocomplete>
                 </div>
             </div>
