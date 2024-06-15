@@ -1,14 +1,15 @@
 import {ContinueButton} from "./ContinueButton.tsx";
 import {TypographyH1} from "./TypographyH1.tsx";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {TypographyH2} from "./TypographyH2.tsx";
 import {BackButton} from "./BackButton.tsx";
 import {useSelector} from "react-redux";
-import {selectPayload} from "../store/appReducer.ts";
-import {useUser} from "@clerk/clerk-react";
+import {selectPayload, updateView} from "../store/appReducer.ts";
+import {useAuth, useUser} from "@clerk/clerk-react";
 import {useCommutyApi} from "../client/useCommutyApi.ts";
+import {useAppDispatch} from "../store/store.ts";
 
-export interface ViewConfig {
+export interface OnboardingViewConfig {
     onContinueClick: () => void;
     title?: string;
     subTitle?: string;
@@ -17,27 +18,48 @@ export interface ViewConfig {
 
 export interface OnboardingViewProps {
     children: React.ReactNode;
-    config: ViewConfig
+    config: OnboardingViewConfig
 }
 
 export const OnboardingView = ({children, config}: OnboardingViewProps) => {
 
     const {user} = useUser()
+    const {getToken} = useAuth()
     const {saveRoute} = useCommutyApi()
+    const [token, setToken] = useState<string | null>(null)
+    const dispatch = useAppDispatch()
 
     const payload = useSelector(selectPayload)
 
-    if (user) {
-        saveRoute(
-            {
-                ...payload,
-                user: {
-                    ...payload.user,
-                    email: user.emailAddresses[0].emailAddress
-                }
-            }
-        )
+    const onSuccess = () => {
+        dispatch(updateView('HOME_PAGE'))
     }
+
+    useEffect(() => {
+        if(user) {
+            getToken({
+                template: '60k'
+            }).then((result) => setToken(result))
+        }
+
+    }, [user]);
+
+    useEffect(() => {
+        if (user && token) {
+            saveRoute(
+                {
+                    ...payload,
+                    user: {
+                        ...payload.user,
+                        email: user.emailAddresses[0].emailAddress
+                    }
+                },
+                token!,
+                onSuccess
+            )
+        }
+
+    }, [user, token]);
 
     return <div className="w-full">
         <div className="flex flex-col items-stretch justify-stretch w-full top-0 p-4">

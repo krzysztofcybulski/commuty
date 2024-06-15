@@ -10,7 +10,7 @@ export const useSaveUserData = () => {
         if (user !== undefined && user !== null) {
             dispatch(updateUser({
                 name: user.fullName!,
-                email: user.emailAddresses[0].emailAddress
+                email: user.emailAddresses[0].emailAddress,
             }))
         } else {
             dispatch(updateUser(undefined))
