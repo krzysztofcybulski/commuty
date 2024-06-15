@@ -34,9 +34,6 @@ application {
 
 jar {
 	manifest {
-		attributes(
-				'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-				'Main-Class': 'io.commuty.CommutyApplication'
-		)
+		attributes 'Main-Class': application.mainClass
 	}
 }
