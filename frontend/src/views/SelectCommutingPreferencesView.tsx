@@ -5,12 +5,10 @@ import {Point} from '../hooks/useFindRoute.ts';
 import {useState} from 'react';
 import {updateAddressFrom, updateView} from '../store/appReducer.ts';
 import {useAppDispatch} from '../store/store.ts';
-import {ContinueButton} from '../components/ContinueButton.tsx';
 import {TypographyH1} from '../components/TypographyH1.tsx';
 import {BackButton} from '../components/BackButton.tsx';
 import {Input} from "../components/Input.tsx";
 import {AddressInput} from "../components/AddressInput.tsx";
-import {RouteMap} from "../components/RouteMap.tsx";
 
 export const SelectCommutingPreferencesView = () => {
     const {isLoaded, loadError} = useLoadScript({
@@ -78,7 +76,7 @@ export const SelectCommutingPreferencesView = () => {
                     height: '65vh',
                 }}
             >
-                <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint}/>
+                {/*<RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint}/>*/}
             </div>
         </div>
     );
