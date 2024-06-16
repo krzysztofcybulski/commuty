@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../store/store.ts';
-import { RidePreference, updateRidePreferences } from '../store/appReducer.ts';
+import { RidePreference, selectRidePreferences, updateRidePreferences } from '../store/appReducer.ts';
+import { useSelector } from 'react-redux';
 
 export const WelcomeView = () => {
   return (
@@ -22,7 +23,8 @@ interface ButtonProps {
 
 const Button = ({ text, ridePreference }: ButtonProps) => {
   const dispatch = useAppDispatch();
-  const [isButtonClicked, setIsButtonClicked] = useState<boolean>(false);
+  const ridePreferences = useSelector(selectRidePreferences);
+  const [isButtonClicked, setIsButtonClicked] = useState<boolean>(ridePreferences[ridePreference]);
   const handleClick = () => {
     setIsButtonClicked(!isButtonClicked);
     dispatch(
