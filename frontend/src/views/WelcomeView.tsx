@@ -51,7 +51,7 @@ const Button = ({ text, ridePreference }: ButtonProps) => {
             width="40px"
             height="40px"
             className={`${isButtonClicked ? '' : 'invisible'} bg-slate-400 rounded-full`}
-            src={'/public/check-mark.png'}
+            src={'/check-mark.png'}
           />
         </div>
       </button>
