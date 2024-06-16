@@ -95,6 +95,9 @@ export const selectPayload = (state: RootState): CommutyApiRequest => {
   const addressTo = state.appSlice.addressTo;
   const username = state.appSlice.username;
   const ridePreferences = state.appSlice.ridePreferencesFields;
+  const chosenDays = state.appSlice.chosenDays;
+  const departureTime = state.appSlice.departureTime;
+  const returnTime = state.appSlice.returnTime;
 
   const ridePreferencesList = [];
   if (ridePreferences.DRIVER) {
@@ -122,15 +125,15 @@ export const selectPayload = (state: RootState): CommutyApiRequest => {
           latitude: addressTo?.lat?.toString(),
           levelOfDetail: 13,
         },
-        timePreferences: [
-          {
-            day: 'MONDAY',
+        timePreferences: (chosenDays as FullDayName[]).map((chosenDay) => {
+          return {
+            day: chosenDay as FullDayName,
             timeRange: {
-              departureTime: '08:00',
-              returnTime: '13:00',
+              departureTime: departureTime as string,
+              returnTime: returnTime as string,
             },
-          },
-        ],
+          };
+        }),
       },
     ],
   };
