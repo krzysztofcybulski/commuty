@@ -18,6 +18,7 @@ export const BottomMenu = ({chosen}: Props) => {
             <img className={`${chosen === 'HOME' ? 'invert' : ''}`} src="/home.svg" onClick={() => dispatch(updateView('HOME_PAGE'))}/>
             <img className={`${chosen === 'CHATS' ? 'invert' : ''}`} src="/chats.svg" onClick={() => dispatch(updateView('CHATS'))}/>
             <img className={`${chosen === 'PROFILE' ? 'invert' : ''}`} src="/profile.svg" onClick={() => dispatch(updateView('PROFILE'))}/>
+            <SignOutButton></SignOutButton>
         </div>
     </div>
 }

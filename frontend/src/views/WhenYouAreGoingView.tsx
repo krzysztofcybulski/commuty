@@ -10,6 +10,7 @@ import {
   selectReturnTime,
 } from '../store/appReducer';
 import { useAppDispatch } from '../store/store';
+import AnimateOnRender from "../components/AnimateOnRender.tsx";
 
 type FullDayName = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 
@@ -36,6 +37,7 @@ export const WhenYouAreGoingView = () => {
   };
 
   return (
+      <AnimateOnRender>
     <div className="ml-auto mr-auto p-4 pt-0">
       <TypographyH3 text="Commuting on these days" />
       <WeekDaysInput handleWeekDaysChange={handleChosenDaysChange} />
@@ -44,5 +46,6 @@ export const WhenYouAreGoingView = () => {
       <TypographyH3 text="And leaving to home" className="mt-4" />
       <TimePicker defaultValue={defaultTimeTo} setTimePickerTime={handleReturnTimeChange} />
     </div>
+      </AnimateOnRender>
   );
 };

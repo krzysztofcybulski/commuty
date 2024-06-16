@@ -3,3 +3,4 @@ build/
 *.env
 
 .idea/
+node_modules/

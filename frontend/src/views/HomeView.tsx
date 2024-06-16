@@ -10,8 +10,7 @@ import {WeekDaysDisplayWithCommuteTime} from "../components/WeekDaysDisplayWithC
 import {CommuteProps} from "../components/MatchRow.tsx";
 import {BottomMenu} from "../components/BottomMenu.tsx";
 import {FullDayName} from "../store/appReducer.ts";
-import {Dropdown} from "../components/Dropdown.tsx";
-import {Menu, MenuItem} from "../components/Menu.tsx";
+import AnimateOnRender from "../components/AnimateOnRender.tsx";
 
 interface Route {
     days: FullDayName[];
@@ -74,17 +73,19 @@ export const HomeView = () => {
 
     console.log(commutingInfo)
     return (
-        <div className="flex">
-            <div>
-                <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.firstName + "!"}/>
-                {commutingInfo && <WeekDaysDisplayWithCommuteTime
-                    className={"fixed z-10 top-4 pt-10 pl-2"}
-                    chosenWeekDays={commutingInfo.routes[0].days.map(e => ({chosenWeekDay: e, isChosen: true}))}
-                    commute={toCommuteProps(commutingInfo.routes[0])}></WeekDaysDisplayWithCommuteTime>}
+        <AnimateOnRender>
+            <div className="flex">
+                <div>
+                    <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.firstName + "!"}/>
+                    {commutingInfo && <WeekDaysDisplayWithCommuteTime
+                        className={"fixed z-10 top-4 pt-10 pl-2"}
+                        chosenWeekDays={commutingInfo.routes[0].days.map(e => ({chosenWeekDay: e, isChosen: true}))}
+                        commute={toCommuteProps(commutingInfo.routes[0])}></WeekDaysDisplayWithCommuteTime>}
+                </div>
+                <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint} height={'55vh'}></RouteMap>
+                <FoundMatches className={"rounded-full fixed top-1/2 w-full"}/>
+                <BottomMenu chosen={'HOME'}/>
             </div>
-            <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint} height={'55vh'}></RouteMap>
-            <FoundMatches className={"rounded-full fixed top-1/2 w-full"}/>
-            <BottomMenu chosen={'HOME'}/>
-        </div>
+        </AnimateOnRender>
     );
 };
