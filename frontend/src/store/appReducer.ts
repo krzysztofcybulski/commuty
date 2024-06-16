@@ -10,7 +10,9 @@ export type ViewType =
   | 'SET_YOUR_NAME'
   | 'CREATE_ACCOUNT'
   | 'HOME_PAGE'
-  | 'SIGN_IN';
+  | 'SIGN_IN'
+  | 'CHATS'
+  | 'PROFILE';
 
 export enum RidePreference {
   DRIVER = 'DRIVER',

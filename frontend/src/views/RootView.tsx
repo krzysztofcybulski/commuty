@@ -22,6 +22,8 @@ import { CreateAccountView } from './CreateAccountView.tsx';
 import { SignInView } from './SignInView';
 import { HomeView } from './HomeView.tsx';
 import { useSelector } from 'react-redux';
+import {ChatsView} from "./ChatsView.tsx";
+import {ProfileView} from "./ProfileView.tsx";
 
 export const RootView = () => {
   const [isWelcomeValid, setIsWelcomeValid] = useState(true);
@@ -68,6 +70,10 @@ export const RootView = () => {
         return <HomeView />;
       case 'SIGN_IN':
         return <SignInView />;
+      case 'CHATS':
+        return <ChatsView />;
+      case 'PROFILE':
+        return <ProfileView/>;
     }
   };
 
