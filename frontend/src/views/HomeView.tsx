@@ -76,7 +76,7 @@ export const HomeView = () => {
     return (
         <div className="flex">
             <div>
-                <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.fullName ?? ''}/>
+                <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.firstName + "!"}/>
                 {commutingInfo && <WeekDaysDisplayWithCommuteTime
                     className={"fixed z-10 top-4 pt-10 pl-2"}
                     chosenWeekDays={commutingInfo.routes[0].days.map(e => ({chosenWeekDay: e, isChosen: true}))}
