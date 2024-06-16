@@ -44,9 +44,5 @@ Can be locally run with `npm install; npm run dev`.
 For backend we used old good Spring Boot with Java 21.
 For MVP we kept it simple - data is being stored in memory, hovewer it could scale horizontally after switching the storage and adding more instances.
 
-- Java 21
-- Spring Boot
-- Heroku
-
 App is being built on `git push` and deployed to Heroku.
 Can be locally run with `./gradlew bootRun`.
