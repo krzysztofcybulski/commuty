@@ -23,6 +23,8 @@ export const MatchRow = ({username, description, chosenWeekDays, commute}: Match
                 <img className="w-20 h-20" src={`https://avatar.iran.liara.run/public/boy?username=${username}`}></img>
                 <div className="flex-col mx-4">
                     <TypographyH4 text={username}/>
+                    { username === "Tomasz" && "#rock-music #talkative"}
+                    { username === "Krzysztof" && "#animal-friendly #pop"}
                     <p>{description}</p>
                 </div>
             </div>
