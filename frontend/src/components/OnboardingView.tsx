@@ -56,6 +56,27 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
   }, [user]);
 
   useEffect(() => {
+    if (user && token) {
+      if (view === 'CREATE_ACCOUNT') {
+        saveRoute(
+          {
+            ...payload,
+            user: {
+              ...payload.user,
+              email: user.emailAddresses[0].emailAddress,
+            },
+          },
+          token!,
+          onSuccess,
+        );
+      } else {
+        dispatch(updateView('HOME_PAGE'));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!user && !token) return;
     setIsLoading(true);
     setTimeout(async () => {
       if (user && token) {
@@ -81,7 +102,7 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
 
   if (isLoading) {
     return (
-      <div className=" min-h-screen flex flex-col justify-center items-center mt-4 mb-2 pb-20">
+      <div className=" min-h-screen flex flex-col justify-center items-center mt-4 mb-2 p-4 pb-20">
         <TypographyH4 className=" text-center" text="Just a second. We are looking for the best match for You ;)" />
         <Spinner />
       </div>
