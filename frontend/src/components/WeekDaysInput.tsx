@@ -28,7 +28,6 @@ interface WeekDaysInput {
 export const WeekDaysInput = ({ handleWeekDaysChange }: WeekDaysInput) => {
   const dispatch = useAppDispatch();
   const chosenWeekDays = useSelector(selectWeeksDayChosen);
-  console.log(chosenWeekDays);
   const [weekDaysState, setWeekDaysState] = useState<Record<FullDayName, boolean>>(
     chosenWeekDays || {
       MONDAY: false,
