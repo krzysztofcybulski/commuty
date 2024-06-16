@@ -19,6 +19,7 @@ import { WhenYouAreGoingView } from './WhenYouAreGoingView.tsx';
 import { OnboardingView, OnboardingViewConfig } from '../components/OnboardingView.tsx';
 import { SetYourNameView } from './SetYourNameView.tsx';
 import { CreateAccountView } from './CreateAccountView.tsx';
+import { SignInView } from './SignInView';
 import { HomeView } from './HomeView.tsx';
 import { useSelector } from 'react-redux';
 
@@ -65,6 +66,8 @@ export const RootView = () => {
         return <CreateAccountView />;
       case 'HOME_PAGE':
         return <HomeView />;
+      case 'SIGN_IN':
+        return <SignInView />;
     }
   };
 
@@ -85,6 +88,7 @@ export const RootView = () => {
           hideBackButton: true,
           isFieldValidated: isWelcomeValid || isWelcomeValidated(),
           errorMessage: 'You must choose at least one option.',
+          shouldDisplayRedirectToSignIn: true,
         };
       case 'SELECT_COMMUTING_PREFERENCES':
         return {
@@ -141,7 +145,14 @@ export const RootView = () => {
   };
 
   const isOnboardingView = () =>
-    ['WELCOME', 'SELECT_COMMUTING_PREFERENCES', 'WHEN_YOU_ARE_GOING', 'SET_YOUR_NAME', 'CREATE_ACCOUNT'].includes(view);
+    [
+      'WELCOME',
+      'SELECT_COMMUTING_PREFERENCES',
+      'WHEN_YOU_ARE_GOING',
+      'SET_YOUR_NAME',
+      'CREATE_ACCOUNT',
+      'SIGN_IN',
+    ].includes(view);
 
   if (!isSignedIn && !isOnboardingView()) {
     dispatch(updateView('WELCOME'));
