@@ -12,7 +12,7 @@ export const BackButton = ({ view }: BackButtonProps) => {
   };
 
   return (
-    <button onClick={handleGoBackClick} className=" bg-white -ml-2">
+    <button onClick={handleGoBackClick} className=" bg-white -ml-2 mb-4">
       <img width="40px" height="40px" src="../../public/left-chevron.png" />
     </button>
   );

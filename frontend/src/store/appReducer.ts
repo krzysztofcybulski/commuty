@@ -37,6 +37,8 @@ const initialState: AppState = {
     [RidePreference.DRIVER]: false,
     [RidePreference.PASSENGER]: false,
   },
+  addressFrom: undefined,
+  addressTo: undefined,
   departureTime: '08:00',
   returnTime: '16:00',
   chosenDays: [],
@@ -89,6 +91,13 @@ export const {
 } = appReducer.actions;
 
 export const selectView = (state: RootState) => state.appSlice.view;
+export const selectRidePreferences = (state: RootState) => state.appSlice.ridePreferencesFields;
+export const selectAddressTo = (state: RootState) => state.appSlice.addressTo;
+export const selectAddressFrom = (state: RootState) => state.appSlice.addressFrom;
+export const selectReturnTime = (state: RootState) => state.appSlice.returnTime;
+export const selectDepartureTime = (state: RootState) => state.appSlice.departureTime;
+export const selectChosenDays = (state: RootState) => state.appSlice.chosenDays;
+export const selectUsername = (state: RootState) => state.appSlice.username;
 
 export const selectPayload = (state: RootState): CommutyApiRequest => {
   const addressFrom = state.appSlice.addressFrom;
