@@ -1,10 +1,11 @@
 import {useCommutyApi} from "../client/useCommutyApi.ts";
 import {useEffect, useState} from "react";
 import {useAuth} from "@clerk/clerk-react";
-import {json} from "react-router-dom";
+import {CommuteProps, MatchRow} from "./MatchRow.tsx";
+import {FullDayName} from "../store/appReducer.ts";
 
 interface Route {
-    day: string;
+    day: FullDayName;
     from: string;
     to: string;
 }
@@ -13,8 +14,14 @@ interface CommutingInfo {
     routes: Route[]
 }
 
+interface UserInfo {
+    name: string;
+    description: string;
+}
+
 interface Match {
     commutingInfo: CommutingInfo
+    user: UserInfo
 }
 
 interface Matches {
@@ -37,13 +44,24 @@ export const FoundMatches = () => {
         if (token) {
             findMatchedRoutes(token!, (json) => {
                 setMatches(json)
-                console.log(json)
             })
         }
-
-        console.log(matches)
     }, [token]);
 
+    const toCommuteProps = (route: Route): CommuteProps => {
+        return {
+            from: route.from.substring(0, 5),
+            to: route.to.substring(0, 5),
+            isTimeFitting: true
+        }
+    }
+
     return <div>
+        {matches && matches.matches.map((match) =>
+            <MatchRow username={match.user.name} description={match.user.description} chosenWeekDays={
+                match.commutingInfo.routes.map(e => ({chosenWeekDay: e.day, isChosen: true}))
+            } commute={toCommuteProps(match.commutingInfo.routes[0])}
+            />
+        )}
     </div>
 }

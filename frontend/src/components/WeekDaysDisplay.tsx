@@ -22,7 +22,7 @@ enum WeekDayFullNameToShortName {
 
 export const WeekDaysDisplay = ({ chosenWeekDays, className }: WeekDaysDisplayProps) => {
   return (
-    <div className={`flex flex-row gap-1 ${className}`}>
+    <div className={`grid grid-cols-4 flex-row gap-1 ${className}`}>
       {chosenWeekDays.map((chosenWeekDay, index) => {
         return (
           <div

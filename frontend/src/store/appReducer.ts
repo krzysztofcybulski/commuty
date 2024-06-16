@@ -18,7 +18,7 @@ export enum RidePreference {
 
 type RidePreferencesFields = Record<RidePreference, boolean>;
 
-type FullDayName = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
+export type FullDayName = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 
 export interface AppState {
   view: ViewType;
