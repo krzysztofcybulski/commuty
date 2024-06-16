@@ -86,7 +86,7 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
         )}
         {!config.buttonDisabled && <ContinueButton className="grow m-4" onClick={config.onContinueClick} />}
         {config.shouldDisplayRedirectToSignIn && (
-          <button className="-mt-4 pt-0" onClick={handleRedirectToSignInClick}>
+          <button className="-mt-2 mb-2 pt-0" onClick={handleRedirectToSignInClick}>
             I already have an account
           </button>
         )}

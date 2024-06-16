@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../store/store.ts';
 import { RidePreference, selectRidePreferences, updateRidePreferences } from '../store/appReducer.ts';
 import { useSelector } from 'react-redux';
-import AnimateOnRender from "../components/AnimateOnRender.tsx";
+import AnimateOnRender from '../components/AnimateOnRender.tsx';
 
 export const WelcomeView = () => {
   return (
@@ -44,22 +44,22 @@ const Button = ({ text, ridePreference }: ButtonProps) => {
   }, [isButtonClicked]);
 
   return (
-      <AnimateOnRender>
-        <div
-            className={` text-2xl bg-gray-800 text-white rounded-xl flex flex-col justify-center mb-4 h-22 ${isButtonClicked ? 'outline-none ring-2 ring-violet-600' : ''}`}
-        >
-          <button onClick={handleClick} className={` h-40 relative px-4 py-2 transition`}>
-            <div className="flex justify-center my-1">{text}</div>
-            <div className="flex justify-center">
-              <img
-                  width="40px"
-                  height="40px"
-                  className={`${isButtonClicked ? '' : 'invisible'} bg-slate-400 rounded-full`}
-                  src={'/check-mark.png'}
-              />
-            </div>
-          </button>
-        </div>
-      </AnimateOnRender>
+    <AnimateOnRender>
+      <div
+        className={` text-2xl bg-gray-800 text-white rounded-xl flex flex-col justify-center mb-4 h-22 ${isButtonClicked ? 'outline-none ring-2 ring-black' : ''}`}
+      >
+        <button onClick={handleClick} className={` h-40 relative px-4 py-2 transition`}>
+          <div className="flex justify-center my-1">{text}</div>
+          <div className="flex justify-center">
+            <img
+              width="40px"
+              height="40px"
+              className={`${isButtonClicked ? '' : 'invisible'} bg-slate-400 rounded-full`}
+              src={'/check-mark.png'}
+            />
+          </div>
+        </button>
+      </div>
+    </AnimateOnRender>
   );
 };
