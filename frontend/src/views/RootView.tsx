@@ -1,6 +1,6 @@
 import { WelcomeView } from './WelcomeView.tsx';
 import { useEffect } from 'react';
-import { useUser } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import { useSaveUserData } from '../hooks/useSaveUserData.ts';
 import { useAppDispatch, useAppSelector } from '../store/store.ts';
 import { selectView, updateView } from '../store/appReducer.ts';
@@ -13,6 +13,7 @@ import { HomeView } from './HomeView.tsx';
 
 export const RootView = () => {
   const { user } = useUser();
+  const { isSignedIn } = useAuth();
   const saveUserData = useSaveUserData();
   const view = useAppSelector(selectView);
   const dispatch = useAppDispatch();
@@ -80,6 +81,13 @@ export const RootView = () => {
         return undefined;
     }
   };
+
+  const isOnboardingView = () =>
+    ['WELCOME', 'SELECT_COMMUTING_PREFERENCES', 'WHEN_YOU_ARE_GOING', 'SET_YOUR_NAME', 'CREATE_ACCOUNT'].includes(view);
+
+  if (!isSignedIn && !isOnboardingView()) {
+    dispatch(updateView('WELCOME'));
+  }
 
   return (
     <div className="flex justify-stretch items-stretch w-full">
