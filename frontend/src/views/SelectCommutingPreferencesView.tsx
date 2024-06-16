@@ -1,14 +1,28 @@
 import { useLoadScript } from '@react-google-maps/api';
 import { Point } from '../hooks/useFindRoute.ts';
 import { useState } from 'react';
-import { updateAddressFrom, updateAddressTo } from '../store/appReducer.ts';
+import {
+  selectAddressFrom,
+  selectAddressFromText,
+  selectAddressTo,
+  selectAddressToText,
+  updateAddressFrom,
+  updateAddressFromText,
+  updateAddressTo,
+  updateAddressToText,
+} from '../store/appReducer.ts';
 import { useAppDispatch } from '../store/store.ts';
 import { Input } from '../components/Input.tsx';
 import { AddressInput } from '../components/AddressInput.tsx';
 import { RouteMap } from '../components/RouteMap.tsx';
 import { Label } from '../components/Label.tsx';
+import { useSelector } from 'react-redux';
 
 export const SelectCommutingPreferencesView = () => {
+  const addressToText = useSelector(selectAddressToText);
+  const addressFromText = useSelector(selectAddressFromText);
+  const addressTo = useSelector(selectAddressTo);
+  const addressFrom = useSelector(selectAddressFrom);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     id: '982eaad930f4790c',
@@ -16,15 +30,15 @@ export const SelectCommutingPreferencesView = () => {
   });
 
   const [startingPoint, setStartingPoint] = useState<Point | undefined>({
-    lat: 52.249472,
-    lng: 21.098527,
+    lat: addressFrom?.lat ?? 52.249472,
+    lng: addressFrom?.lng ?? 21.098527,
   });
   const [destinationPoint, setDestinationPoint] = useState<Point | undefined>({
-    lat: 52.2323778,
-    lng: 20.9861998,
+    lat: addressTo?.lat ?? 52.2323778,
+    lng: addressTo?.lng ?? 20.9861998,
   });
-  const [startingFromAddress, setStartingFromAddress] = useState<string>('');
-  const [destinationAddress, setDestinationAddress] = useState<string>('');
+  const [startingFromAddress, setStartingFromAddress] = useState<string>(addressFromText || '');
+  const [destinationAddress, setDestinationAddress] = useState<string>(addressToText || '');
   const dispatch = useAppDispatch();
 
   if (loadError) return <div>Error loading maps</div>;
@@ -45,6 +59,7 @@ export const SelectCommutingPreferencesView = () => {
                 dispatch(updateAddressFrom(address.point));
                 setStartingPoint(address.point);
                 setStartingFromAddress(address.name);
+                dispatch(updateAddressFromText(address.name));
               }}
             >
               <Input
@@ -60,6 +75,7 @@ export const SelectCommutingPreferencesView = () => {
                 dispatch(updateAddressTo(address.point));
                 setDestinationPoint(address.point);
                 setDestinationAddress(address.name);
+                dispatch(updateAddressToText(address.name));
               }}
             >
               <Input

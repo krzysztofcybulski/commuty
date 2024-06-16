@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Label } from '../components/Label.tsx';
 import { Input } from '../components/Input.tsx';
 import { useAppDispatch } from '../store/store.ts';
-import { updateUserName } from '../store/appReducer.ts';
+import { selectUsername, updateUserName } from '../store/appReducer.ts';
+import { useSelector } from 'react-redux';
 
 export const SetYourNameView = () => {
-  const [name, setName] = useState('');
   const dispatch = useAppDispatch();
+  const userNameFromState = useSelector(selectUsername);
+  const [name, setName] = useState(userNameFromState || '');
 
   const handleChangeName = (name: string) => {
     setName(name);
