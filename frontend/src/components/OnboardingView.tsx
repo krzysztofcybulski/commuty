@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { TypographyH2 } from './TypographyH2.tsx';
 import { BackButton } from './BackButton.tsx';
 import { useSelector } from 'react-redux';
-import { selectPayload, selectView, updateView } from '../store/appReducer.ts';
+import { ViewType, selectPayload, selectView, updateView } from '../store/appReducer.ts';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import { useCommutyApi } from '../client/useCommutyApi.ts';
 import { useAppDispatch } from '../store/store.ts';
@@ -15,6 +15,7 @@ export interface OnboardingViewConfig {
   subTitle?: string;
   buttonDisabled?: boolean;
   hideBackButton?: boolean;
+  view?: ViewType;
 }
 
 export interface OnboardingViewProps {
@@ -67,7 +68,7 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
   return (
     <div className="w-full">
       <div className="flex flex-col items-stretch justify-stretch w-full top-0 p-4">
-        {!config.hideBackButton && <BackButton view="WELCOME" />}
+        {!config.hideBackButton && <BackButton view={config.view || 'WELCOME'} />}
         <TypographyH1 text={config.title || ''} className="font-medium text-xl" />
         <TypographyH2 text={config.subTitle || ''} className="mt-2 font-light text-base" />
       </div>
