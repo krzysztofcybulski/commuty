@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { WeekDayButton } from './WeekDayButton';
 
 type FullDayName = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
@@ -18,7 +18,11 @@ const weekDays: WeekDay[] = [
   { short: 'Su', fullDayName: 'SUNDAY' },
 ];
 
-export const WeekDaysInput = () => {
+interface WeekDaysInput {
+  handleWeekDaysChange: (weekDaysState: Record<FullDayName, boolean>) => void;
+}
+
+export const WeekDaysInput = ({ handleWeekDaysChange }: WeekDaysInput) => {
   const [weekDaysState, setWeekDaysState] = useState<Record<FullDayName, boolean>>({
     MONDAY: false,
     TUESDAY: false,
@@ -28,6 +32,10 @@ export const WeekDaysInput = () => {
     SATURDAY: false,
     SUNDAY: false,
   });
+
+  useEffect(() => {
+    handleWeekDaysChange(weekDaysState);
+  }, [weekDaysState]);
 
   const handleWeekDayClick = (weekDay: FullDayName, isDayPicked: boolean) => {
     setWeekDaysState({
@@ -39,7 +47,7 @@ export const WeekDaysInput = () => {
   console.log(weekDaysState);
 
   return (
-    <div className="flex flex-row gap-1">
+    <div className="flex flex-row gap-1 mt-2 mb-2">
       {weekDays.map((weekDay) => {
         return <WeekDayButton handleWeekDayClick={handleWeekDayClick} weekDay={weekDay} />;
       })}
