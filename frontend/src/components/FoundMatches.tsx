@@ -4,7 +4,7 @@ import {useAuth} from "@clerk/clerk-react";
 import {CommuteProps, MatchRow} from "./MatchRow.tsx";
 import {FullDayName} from "../store/appReducer.ts";
 
-interface Route {
+export interface Route {
     day: FullDayName;
     from: string;
     to: string;
@@ -24,11 +24,15 @@ interface Match {
     user: UserInfo
 }
 
-interface Matches {
+export interface Matches {
     matches: Match[]
 }
 
-export const FoundMatches = () => {
+interface Props {
+    className?: string;
+}
+
+export const FoundMatches = ({className}: Props) => {
     const {findMatchedRoutes} = useCommutyApi()
     const [token, setToken] = useState<string | null>()
     const {getToken} = useAuth()
@@ -56,7 +60,7 @@ export const FoundMatches = () => {
         }
     }
 
-    return <div>
+    return <div className={`flex-col ${className} bg-white`}>
         {matches && matches.matches.map((match) =>
             <MatchRow username={match.user.name} description={match.user.description} chosenWeekDays={
                 match.commutingInfo.routes.map(e => ({chosenWeekDay: e.day, isChosen: true}))

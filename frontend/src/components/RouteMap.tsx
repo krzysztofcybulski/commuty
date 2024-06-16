@@ -5,9 +5,10 @@ import {useEffect, useState} from "react";
 export interface RouteMapProps {
     startingPoint?: Point;
     destinationPoint?: Point;
+    height?: string
 }
 
-export const RouteMap = ({startingPoint, destinationPoint}: RouteMapProps) => {
+export const RouteMap = ({startingPoint, destinationPoint, height}: RouteMapProps) => {
     const [directions, setDirections] = useState<any>(null);
 
     const findRoute = useFindRoute({setDirections: setDirections});
@@ -33,7 +34,7 @@ export const RouteMap = ({startingPoint, destinationPoint}: RouteMapProps) => {
     return <GoogleMap
         mapContainerStyle={{
             width: '100vw',
-            height: '50vh',
+            height: height ?? '50vh',
         }}
         options={options}
         zoom={14}

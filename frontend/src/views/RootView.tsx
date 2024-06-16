@@ -1,7 +1,7 @@
 import { WelcomeView } from './WelcomeView.tsx';
 import { useEffect } from 'react';
 import { useAuth, useUser } from '@clerk/clerk-react';
-import { useSaveUserData } from '../hooks/useSaveUserData.ts';
+import { useFetchUserData } from '../hooks/useFetchUserData.ts';
 import { useAppDispatch, useAppSelector } from '../store/store.ts';
 import { selectView, updateView } from '../store/appReducer.ts';
 import { SelectCommutingPreferencesView } from './SelectCommutingPreferencesView.tsx';
@@ -14,7 +14,7 @@ import { HomeView } from './HomeView.tsx';
 export const RootView = () => {
   const { user } = useUser();
   const { isSignedIn } = useAuth();
-  const saveUserData = useSaveUserData();
+  const saveUserData = useFetchUserData();
   const view = useAppSelector(selectView);
   const dispatch = useAppDispatch();
 

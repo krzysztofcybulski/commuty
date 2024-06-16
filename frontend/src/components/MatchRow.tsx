@@ -1,6 +1,7 @@
 import {WeekDaysDisplayWithCommuteTime} from "./WeekDaysDisplayWithCommuteTime.tsx";
 import {TypographyH3} from "./TypographyH3.tsx";
 import {ChosenWeekDay} from "./WeekDaysDisplay.tsx";
+import {TypographyH4} from "./TypographyH4.tsx";
 
 export interface CommuteProps {
     from: string;
@@ -16,13 +17,13 @@ interface MatchRowProps {
 }
 
 export const MatchRow = ({username, description, chosenWeekDays, commute}: MatchRowProps) => {
-    return <div className="flex w-full">
+    return <div className="flex-col w-full">
         <div
             className="flex w-full justify-between items-center p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div className="flex items-center">
                 <img className="w-20 h-20" src="https://avatar.iran.liara.run/public"></img>
                 <div className="flex-col mx-4">
-                    <TypographyH3 text={username}/>
+                    <TypographyH4 text={username}/>
                     <p>{description}</p>
                 </div>
             </div>

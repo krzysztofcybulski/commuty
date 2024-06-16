@@ -2,7 +2,7 @@ import {updateUser} from "../store/userReducer.ts";
 import {useAppDispatch} from "../store/store.ts";
 import {UserResource} from '@clerk/types';
 
-export const useSaveUserData = () => {
+export const useFetchUserData = () => {
 
     const dispatch = useAppDispatch()
 
