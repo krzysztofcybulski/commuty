@@ -35,7 +35,7 @@ export const SelectCommutingPreferencesView = () => {
       <div
         className="p-4 pb-16 flex flex-col justify-center"
         style={{
-          height: '40vh',
+          height: '30vh',
         }}
       >
         <div className="flex-col space-y-4">

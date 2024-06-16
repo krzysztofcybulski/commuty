@@ -25,7 +25,7 @@ export const WeekDayButton = ({ weekDay, handleWeekDayClick }: WeekDaysInputProp
 
   return (
     <div
-      className={`rounded-full w-6 h-6 flex flex-row items-center justify-center text-white text-xs ${isDayPicked ? 'bg-slate-400' : 'bg-gray-800'}`}
+      className={`rounded-full w-10 h-10 flex flex-row items-center justify-center text-white text-xs ${isDayPicked ? 'bg-slate-400' : 'bg-gray-800'}`}
     >
       <button onClick={handleDayPick}>{weekDay.short}</button>
     </div>

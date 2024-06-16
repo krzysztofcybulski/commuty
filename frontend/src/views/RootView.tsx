@@ -65,17 +65,20 @@ export const RootView = () => {
           },
           title: 'When are you commuting?',
           subTitle: 'We will find a perfect match for You',
+          view: 'SELECT_COMMUTING_PREFERENCES',
         };
       case 'SET_YOUR_NAME':
         return {
           onContinueClick: () => {
             dispatch(updateView('CREATE_ACCOUNT'));
           },
+          view: 'WHEN_YOU_ARE_GOING',
         };
       case 'CREATE_ACCOUNT':
         return {
           onContinueClick: () => {},
           buttonDisabled: true,
+          view: 'SET_YOUR_NAME',
         };
       default:
         return undefined;
