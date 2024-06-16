@@ -33,14 +33,15 @@ public class InMemoryRouteRepository implements RouteRepository {
                                          Integer levelOfDetail,
                                          DayOfWeek day,
                                          LocalTime hour,
-                                         RidePreference ridePreference) {
+                                         RidePreference currentRidePreference) {
         return ROUTES.stream()
                 .filter(route -> route.from().levelOfDetail().equals(levelOfDetail)
                         && checkCoordinateRangeFor(route.from().longitude(), longitude)
                         && checkCoordinateRangeFor(route.from().latitude(), latitude))
                 .filter(route -> route.day().equals(day))
                 .filter(route -> checkHourRangeFor(route.hour().getHour(), hour.getHour()))
-                .filter(route -> route.ridePreference().equals(ridePreference))
+//                .filter(route -> route.ridePreference().equals(currentRidePreference))
+                .filter(route -> checkRidePreference(route.ridePreference(), currentRidePreference))
                 .toList();
     }
 
@@ -50,5 +51,10 @@ public class InMemoryRouteRepository implements RouteRepository {
 
     private boolean checkHourRangeFor(int hourToMatch, int routeHour) {
         return Math.abs(hourToMatch - routeHour) <= HOUR_RANGE.toHours();
+    }
+
+    private boolean checkRidePreference(RidePreference preferenceToMatch, RidePreference currentPreference) {
+        if (currentPreference == RidePreference.BOTH) return true;
+        return currentPreference != preferenceToMatch;
     }
 }

@@ -19,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,7 +67,7 @@ public class RouteResource {
                                 final var departureTime = routesForDay.getFirst().hour();
                                 final var returnTime = routesForDay.getLast().hour();
                                 return new RestMatchedCommuteRoute(day, departureTime, returnTime);
-                            }).toList();
+                            }).sorted(comparingInt(it -> it.day().getValue())).toList();
                     return new RestMatches(user, new RestCommutingInfo(routes));
                 }).toList();
         return new MatchedRoutes(matches);
@@ -87,7 +89,8 @@ public class RouteResource {
         sortedRoutes.sort(comparingInt(route -> route.hour().getHour())); // simplification
         final var days = sortedRoutes.stream()
                 .map(Route::day)
-                .collect(Collectors.toSet());
+                .sorted(comparingInt(DayOfWeek::getValue))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
         final var firstPartRoute = routes.getFirst();
         final var lastPartRoute = routes.getLast();
         final var routeWithAddress = new RestMatchedCommuteRouteWithAddress(
@@ -99,14 +102,5 @@ public class RouteResource {
         );
         final var commutingInfo = new RestCommutingInfoPreference(List.of(routeWithAddress));
         return new RestRoutePreferences(commutingInfo);
-    }
-
-    @PostMapping("/v2")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createV2(@RequestBody RestRoutePreference routePreference, Authentication authentication) {
-        LOG.info("Create route request");
-        final var user = routePreference.user();
-        userRepository.save(new User(authentication.getName(), user.name(), "", "", Set.of()));
-        routeCreateFlow.createFor(authentication.getName(), routePreference);
     }
 }
