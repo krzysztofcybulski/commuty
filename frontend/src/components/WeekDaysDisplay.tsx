@@ -1,6 +1,6 @@
 type FullDayName = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 
-interface ChosenWeekDay {
+export interface ChosenWeekDay {
   chosenWeekDay: FullDayName;
   isChosen: boolean;
 }
@@ -26,7 +26,7 @@ export const WeekDaysDisplay = ({ chosenWeekDays, className }: WeekDaysDisplayPr
       {chosenWeekDays.map((chosenWeekDay, index) => {
         return (
           <div
-            className={`rounded-full w-6 h-6 flex flex-row items-center justify-center text-white text-xs ${chosenWeekDay.isChosen ? 'bg-gray-800' : 'bg-slate-400'}`}
+            className={`rounded-full w-8 h-8 flex flex-row items-center justify-center text-white text-xs ${chosenWeekDay.isChosen ? 'bg-gray-800' : 'bg-slate-400'}`}
             key={index}
           >
             {WeekDayFullNameToShortName[chosenWeekDay.chosenWeekDay]}

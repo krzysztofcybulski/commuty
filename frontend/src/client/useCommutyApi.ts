@@ -20,7 +20,24 @@ export const useCommutyApi = () => {
         });
     };
 
+    const findMatchedRoutes = async (token: string, onSuccess: (json: any) => void) => {
+
+        return fetch(`${BASE_URL}/routes`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            }
+        }).then(async (result) => {
+            if (result.status === 200) {
+                onSuccess(await result.json())
+            }
+        });
+    };
+
     return {
         saveRoute: saveRoute,
+        findMatchedRoutes: findMatchedRoutes
     };
 };

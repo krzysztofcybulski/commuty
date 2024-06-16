@@ -1,0 +1,33 @@
+import {WeekDaysDisplayWithCommuteTime} from "./WeekDaysDisplayWithCommuteTime.tsx";
+import {TypographyH3} from "./TypographyH3.tsx";
+import {ChosenWeekDay} from "./WeekDaysDisplay.tsx";
+
+export interface CommuteProps {
+    from: string;
+    to: string;
+    isTimeFitting: boolean;
+}
+
+interface MatchRowProps {
+    username: string;
+    description: string;
+    chosenWeekDays: ChosenWeekDay[];
+    commute: CommuteProps;
+}
+
+export const MatchRow = ({username, description, chosenWeekDays, commute}: MatchRowProps) => {
+    return <div className="flex w-full">
+        <div
+            className="flex w-full justify-between items-center p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div className="flex items-center">
+                <img className="w-20 h-20" src="https://avatar.iran.liara.run/public"></img>
+                <div className="flex-col mx-4">
+                    <TypographyH3 text={username}/>
+                    <p>{description}</p>
+                </div>
+            </div>
+            <WeekDaysDisplayWithCommuteTime chosenWeekDays={chosenWeekDays}
+                                            commute={commute}></WeekDaysDisplayWithCommuteTime>
+        </div>
+    </div>
+}
