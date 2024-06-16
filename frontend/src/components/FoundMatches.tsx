@@ -10,7 +10,7 @@ export interface Route {
     to: string;
 }
 
-interface CommutingInfo {
+export interface CommutingInfo {
     routes: Route[]
 }
 

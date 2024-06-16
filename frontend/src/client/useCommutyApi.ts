@@ -39,7 +39,7 @@ export const useCommutyApi = () => {
 
     const getPreferences = async (token: string, onSuccess: (json: any) => void) => {
 
-        return fetch(`${BASE_URL}/routes`, {
+        return fetch(`${BASE_URL}/routes/preferences`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

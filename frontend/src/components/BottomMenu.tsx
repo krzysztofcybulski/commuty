@@ -1,5 +1,6 @@
 import {useAppDispatch} from "../store/store.ts";
 import {updateView} from "../store/appReducer.ts";
+import {SignOutButton} from "@clerk/clerk-react";
 
 type ChosenItem = 'HOME' | 'CHATS' | 'PROFILE'
 

@@ -1,4 +1,4 @@
-import {FoundMatches, Matches, Route} from '../components/FoundMatches.tsx';
+import {FoundMatches} from '../components/FoundMatches.tsx';
 import {useAuth, useUser} from '@clerk/clerk-react';
 import {RouteMap} from "../components/RouteMap.tsx";
 import {useEffect, useState} from "react";
@@ -9,6 +9,19 @@ import {useCommutyApi} from "../client/useCommutyApi.ts";
 import {WeekDaysDisplayWithCommuteTime} from "../components/WeekDaysDisplayWithCommuteTime.tsx";
 import {CommuteProps} from "../components/MatchRow.tsx";
 import {BottomMenu} from "../components/BottomMenu.tsx";
+import {FullDayName} from "../store/appReducer.ts";
+import {Dropdown} from "../components/Dropdown.tsx";
+import {Menu, MenuItem} from "../components/Menu.tsx";
+
+interface Route {
+    days: FullDayName[];
+    from: string;
+    to: string;
+}
+
+interface CommutingInfo {
+    routes: Route[]
+}
 
 export const HomeView = () => {
 
@@ -22,7 +35,7 @@ export const HomeView = () => {
     const {getPreferences} = useCommutyApi()
     const user = useUser()
     const {getToken} = useAuth()
-    const [matches, setMatches] = useState<Matches>()
+    const [commutingInfo, setCommutingInfo] = useState<CommutingInfo>()
 
     useEffect(() => {
         getToken({
@@ -33,15 +46,11 @@ export const HomeView = () => {
     useEffect(() => {
         if (token) {
             getPreferences(token, (json) => {
-                setMatches(json)
+                setCommutingInfo(json.commutingInfo)
             })
         }
 
     }, [token]);
-
-    useEffect(() => {
-        console.log(matches)
-    }, []);
 
     const [startingPoint] = useState<Point | undefined>({
         lat: 52.249472,
@@ -63,17 +72,15 @@ export const HomeView = () => {
         }
     }
 
-    const match = matches && matches.matches[0]
-    const commutingInfo = match && match!.commutingInfo
-
+    console.log(commutingInfo)
     return (
         <div className="flex">
             <div>
                 <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.fullName ?? ''}/>
                 {commutingInfo && <WeekDaysDisplayWithCommuteTime
                     className={"fixed z-10 top-4 pt-10 pl-2"}
-                    chosenWeekDays={match!.commutingInfo.routes.map(e => ({chosenWeekDay: e.day, isChosen: true}))}
-                    commute={toCommuteProps(commutingInfo!.routes[0])}></WeekDaysDisplayWithCommuteTime>}
+                    chosenWeekDays={commutingInfo.routes[0].days.map(e => ({chosenWeekDay: e, isChosen: true}))}
+                    commute={toCommuteProps(commutingInfo.routes[0])}></WeekDaysDisplayWithCommuteTime>}
             </div>
             <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint} height={'55vh'}></RouteMap>
             <FoundMatches className={"rounded-full fixed top-1/2 w-full"}/>
