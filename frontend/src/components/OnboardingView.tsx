@@ -18,6 +18,7 @@ export interface OnboardingViewConfig {
   view?: ViewType;
   errorMessage?: string;
   isFieldValidated?: boolean;
+  shouldDisplayRedirectToSignIn?: boolean;
 }
 
 export interface OnboardingViewProps {
@@ -37,6 +38,10 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
 
   const onSuccess = () => {
     dispatch(updateView('HOME_PAGE'));
+  };
+
+  const handleRedirectToSignInClick = () => {
+    dispatch(updateView('SIGN_IN'));
   };
 
   useEffect(() => {
@@ -80,6 +85,11 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
           <div className="flex items-center justify-center p-4 pb-0 text-red-600">{config.errorMessage}</div>
         )}
         {!config.buttonDisabled && <ContinueButton className="grow m-4" onClick={config.onContinueClick} />}
+        {config.shouldDisplayRedirectToSignIn && (
+          <button className="-mt-4 pt-0" onClick={handleRedirectToSignInClick}>
+            I already have an account
+          </button>
+        )}
       </div>
     </div>
   );
