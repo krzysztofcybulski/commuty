@@ -20,7 +20,7 @@ export const TimePicker = ({ setTimePickerTime, defaultValue, className }: TimeP
       <select
         defaultValue={defaultValue}
         id="time-picker"
-        className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-violet-600"
+        className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-black"
         onChange={(e) => setTimePickerTime(e.target.value)}
       >
         <option value="" disabled>

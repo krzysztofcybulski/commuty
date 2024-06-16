@@ -32,6 +32,9 @@ export interface AppState {
   departureTime?: string;
   returnTime?: string;
   chosenDays?: FullDayName[];
+  addressFromText?: string;
+  addressToText?: string;
+  weekDaysChosen?: Record<FullDayName, boolean>;
 }
 
 const initialState: AppState = {
@@ -45,6 +48,17 @@ const initialState: AppState = {
   departureTime: '08:00',
   returnTime: '16:00',
   chosenDays: [],
+  addressFromText: '',
+  addressToText: '',
+  weekDaysChosen: {
+    MONDAY: false,
+    TUESDAY: false,
+    WEDNESDAY: false,
+    THURSDAY: false,
+    FRIDAY: false,
+    SATURDAY: false,
+    SUNDAY: false,
+  },
 };
 
 export const appReducer = createSlice({
@@ -78,6 +92,18 @@ export const appReducer = createSlice({
     updateChosenDays: (state, action: PayloadAction<FullDayName[]>) => {
       state.chosenDays = [...action.payload];
     },
+    updateAddressFromText: (state, action: PayloadAction<string>) => {
+      state.addressFromText = action.payload;
+    },
+    updateAddressToText: (state, action: PayloadAction<string>) => {
+      state.addressToText = action.payload;
+    },
+    updateWeeksDayChosen: (state, action: PayloadAction<Record<FullDayName, boolean>>) => {
+      state.weekDaysChosen = {
+        ...state.weekDaysChosen,
+        ...action.payload,
+      };
+    },
   },
 });
 
@@ -91,6 +117,9 @@ export const {
   updateReturnTime,
   updateDepartureTime,
   updateChosenDays,
+  updateAddressFromText,
+  updateAddressToText,
+  updateWeeksDayChosen,
 } = appReducer.actions;
 
 export const selectView = (state: RootState) => state.appSlice.view;
@@ -101,6 +130,9 @@ export const selectReturnTime = (state: RootState) => state.appSlice.returnTime;
 export const selectDepartureTime = (state: RootState) => state.appSlice.departureTime;
 export const selectChosenDays = (state: RootState) => state.appSlice.chosenDays;
 export const selectUsername = (state: RootState) => state.appSlice.username;
+export const selectAddressFromText = (state: RootState) => state.appSlice.addressFromText;
+export const selectAddressToText = (state: RootState) => state.appSlice.addressToText;
+export const selectWeeksDayChosen = (state: RootState) => state.appSlice.weekDaysChosen;
 
 export const selectPayload = (state: RootState): CommutyApiRequest => {
   const addressFrom = state.appSlice.addressFrom;

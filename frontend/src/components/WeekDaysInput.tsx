@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { WeekDayButton } from './WeekDayButton';
+import { useSelector } from 'react-redux';
+import { selectChosenDays, selectWeeksDayChosen, updateWeeksDayChosen } from '../store/appReducer';
+import { useAppDispatch } from '../store/store';
 
 type FullDayName = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 
@@ -23,15 +26,20 @@ interface WeekDaysInput {
 }
 
 export const WeekDaysInput = ({ handleWeekDaysChange }: WeekDaysInput) => {
-  const [weekDaysState, setWeekDaysState] = useState<Record<FullDayName, boolean>>({
-    MONDAY: false,
-    TUESDAY: false,
-    WEDNESDAY: false,
-    THURSDAY: false,
-    FRIDAY: false,
-    SATURDAY: false,
-    SUNDAY: false,
-  });
+  const dispatch = useAppDispatch();
+  const chosenWeekDays = useSelector(selectWeeksDayChosen);
+  console.log(chosenWeekDays);
+  const [weekDaysState, setWeekDaysState] = useState<Record<FullDayName, boolean>>(
+    chosenWeekDays || {
+      MONDAY: false,
+      TUESDAY: false,
+      WEDNESDAY: false,
+      THURSDAY: false,
+      FRIDAY: false,
+      SATURDAY: false,
+      SUNDAY: false,
+    },
+  );
 
   useEffect(() => {
     handleWeekDaysChange(weekDaysState);
@@ -42,6 +50,7 @@ export const WeekDaysInput = ({ handleWeekDaysChange }: WeekDaysInput) => {
       ...weekDaysState,
       [weekDay]: isDayPicked,
     });
+    dispatch(updateWeeksDayChosen({ ...weekDaysState, [weekDay]: isDayPicked }));
   };
 
   return (

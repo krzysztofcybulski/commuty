@@ -44,7 +44,7 @@ const Button = ({ text, ridePreference }: ButtonProps) => {
 
   return (
     <div
-      className={` text-2xl bg-gray-800 text-white rounded-xl flex flex-col justify-center mb-4 h-22 ${isButtonClicked ? 'outline-none ring-2 ring-violet-600' : ''}`}
+      className={` text-2xl bg-gray-800 text-white rounded-xl flex flex-col justify-center mb-4 h-22 ${isButtonClicked ? 'outline-none ring-2 ring-black' : ''}`}
     >
       <button onClick={handleClick} className={` h-40 relative px-4 py-2 transition`}>
         <div className="flex justify-center my-1">{text}</div>
