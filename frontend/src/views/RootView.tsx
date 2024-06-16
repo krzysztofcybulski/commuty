@@ -22,14 +22,20 @@ import { CreateAccountView } from './CreateAccountView.tsx';
 import { SignInView } from './SignInView';
 import { HomeView } from './HomeView.tsx';
 import { useSelector } from 'react-redux';
-import {ChatsView} from "./ChatsView.tsx";
-import {ProfileView} from "./ProfileView.tsx";
+import { ChatsView } from './ChatsView.tsx';
+import { ProfileView } from './ProfileView.tsx';
+import { useMediaQuery } from 'react-responsive';
+import { TypographyH1 } from '../components/TypographyH1.tsx';
 
 export const RootView = () => {
   const [isWelcomeValid, setIsWelcomeValid] = useState(true);
   const [isCommutingValid, setIsCommutingValid] = useState(true);
   const [isWhenValid, setIsWhenValid] = useState(true);
   const [isUsernameValid, setIsUsernameValid] = useState(true);
+
+  const isBiggerThanMobile = useMediaQuery({
+    query: '(min-width: 481px)',
+  });
 
   const { user } = useUser();
   const { isSignedIn } = useAuth();
@@ -54,6 +60,8 @@ export const RootView = () => {
     saveUserData(user);
   }, []);
 
+  if (isBiggerThanMobile) return <TypographyH1 text="Commuty is for mobile users only" />;
+
   const getView = () => {
     switch (view) {
       case 'WELCOME':
@@ -73,7 +81,7 @@ export const RootView = () => {
       case 'CHATS':
         return <ChatsView />;
       case 'PROFILE':
-        return <ProfileView/>;
+        return <ProfileView />;
     }
   };
 
@@ -165,7 +173,7 @@ export const RootView = () => {
   }
 
   return (
-    <div className="flex justify-stretch items-stretch w-full">
+    <div className="flex justify-stretch items-stretch">
       {['WELCOME', 'SELECT_COMMUTING_PREFERENCES', 'WHEN_YOU_ARE_GOING', 'SET_YOUR_NAME', 'CREATE_ACCOUNT'].includes(
         view,
       ) ? (
