@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {useAuth} from "@clerk/clerk-react";
 import {CommuteProps, MatchRow} from "./MatchRow.tsx";
 import {FullDayName} from "../store/appReducer.ts";
+import {TypographyH3} from "./TypographyH3.tsx";
+import {TypographyH4} from "./TypographyH4.tsx";
 
 export interface Route {
     day: FullDayName;
@@ -57,6 +59,14 @@ export const FoundMatches = ({className}: Props) => {
             from: route.from.substring(0, 5),
             to: route.to.substring(0, 5),
             isTimeFitting: true
+        }
+    }
+
+    {
+        if(matches && matches.matches.length === 0) {
+            return <div className="flex rounded-full fixed top-2/3 w-full">
+                <TypographyH4 className="mx-auto" text={'No matches found :('}/>
+            </div>
         }
     }
 

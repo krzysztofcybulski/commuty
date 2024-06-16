@@ -33,7 +33,7 @@ export const HomeView = () => {
     const [token, setToken] = useState<string | null>()
     const {getPreferences} = useCommutyApi()
     const user = useUser()
-    const {getToken} = useAuth()
+    const {getToken, signOut} = useAuth()
     const [commutingInfo, setCommutingInfo] = useState<CommutingInfo>()
 
     useEffect(() => {
@@ -71,12 +71,11 @@ export const HomeView = () => {
         }
     }
 
-    console.log(commutingInfo)
     return (
         <div>
             <AnimateOnRender>
                 <div className="flex">
-                    <div>
+                    <div onClick={() => {signOut()}}>
                         <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.firstName + "!"}/>
                         {commutingInfo && <WeekDaysDisplayWithCommuteTime
                             className={"fixed z-10 top-4 pt-10 pl-2"}
