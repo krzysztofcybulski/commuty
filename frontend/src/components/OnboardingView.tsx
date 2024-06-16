@@ -16,6 +16,8 @@ export interface OnboardingViewConfig {
   buttonDisabled?: boolean;
   hideBackButton?: boolean;
   view?: ViewType;
+  errorMessage?: string;
+  isFieldValidated?: boolean;
 }
 
 export interface OnboardingViewProps {
@@ -73,7 +75,10 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
         <TypographyH2 text={config.subTitle || ''} className="mt-2 font-light text-base" />
       </div>
       {children}
-      <div className="fixed flex items-stretch justify-stretch w-full bottom-0">
+      <div className="fixed flex flex-col items-stretch justify-stretch w-full bottom-0">
+        {!config.isFieldValidated && (
+          <div className="flex items-center justify-center p-4 pb-0 text-red-600">{config.errorMessage}</div>
+        )}
         {!config.buttonDisabled && <ContinueButton className="grow m-4" onClick={config.onContinueClick} />}
       </div>
     </div>
