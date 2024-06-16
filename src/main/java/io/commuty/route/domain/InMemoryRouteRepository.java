@@ -40,7 +40,6 @@ public class InMemoryRouteRepository implements RouteRepository {
                         && checkCoordinateRangeFor(route.from().latitude(), latitude))
                 .filter(route -> route.day().equals(day))
                 .filter(route -> checkHourRangeFor(route.hour().getHour(), hour.getHour()))
-//                .filter(route -> route.ridePreference().equals(currentRidePreference))
                 .filter(route -> checkRidePreference(route.ridePreference(), currentRidePreference))
                 .toList();
     }

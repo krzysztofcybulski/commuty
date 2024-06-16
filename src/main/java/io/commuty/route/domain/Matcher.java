@@ -18,11 +18,8 @@ public class Matcher {
     public List<Route> matchFor(String authenticated) {
         final var routes = routeRepository.findRoutesFor(authenticated);
         return routes.stream()
-                .map(route -> List.of(matchRouteFor(route.from(), route.day(), route.hour(), route.ridePreference()),
-                        matchRouteFor(route.to(), route.day(), route.hour(), route.ridePreference()))
-                )
+                .map(route -> matchRouteFor(route.from(), route.day(), route.hour(), route.ridePreference()))
                 .flatMap(List::stream)
-                .flatMap(List::stream) //??????
                 .filter(route -> !route.user().equals(authenticated))
                 .toList();
     }
