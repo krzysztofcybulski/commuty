@@ -8,6 +8,8 @@ import { ViewType, selectPayload, selectView, updateView } from '../store/appRed
 import { useAuth, useUser } from '@clerk/clerk-react';
 import { useCommutyApi } from '../client/useCommutyApi.ts';
 import { useAppDispatch } from '../store/store.ts';
+import { TypographyH4 } from './TypographyH4.tsx';
+import { Spinner } from './Spinner.tsx';
 
 export interface OnboardingViewConfig {
   onContinueClick: () => void;
@@ -32,6 +34,7 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
   const { saveRoute } = useCommutyApi();
   const [token, setToken] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const payload = useSelector(selectPayload);
   const view = useSelector(selectView);
@@ -53,24 +56,37 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
   }, [user]);
 
   useEffect(() => {
-    if (user && token) {
-      if (view === 'CREATE_ACCOUNT') {
-        saveRoute(
-          {
-            ...payload,
-            user: {
-              ...payload.user,
-              email: user.emailAddresses[0].emailAddress,
+    setIsLoading(true);
+    setTimeout(async () => {
+      if (user && token) {
+        if (view === 'CREATE_ACCOUNT') {
+          await saveRoute(
+            {
+              ...payload,
+              user: {
+                ...payload.user,
+                email: user.emailAddresses[0].emailAddress,
+              },
             },
-          },
-          token!,
-          onSuccess,
-        );
-      } else {
-        dispatch(updateView('HOME_PAGE'));
+            token!,
+            onSuccess,
+          );
+        } else {
+          dispatch(updateView('HOME_PAGE'));
+        }
       }
-    }
+      setIsLoading(false);
+    }, 2000);
   }, [user, token]);
+
+  if (isLoading) {
+    return (
+      <div className=" min-h-screen flex flex-col justify-center items-center mt-4 mb-2 pb-20">
+        <TypographyH4 className=" text-center" text="Just a second. We are looking for the best match for You ;)" />
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -84,7 +100,7 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
         {!config.isFieldValidated && (
           <div className="flex items-center justify-center p-4 pb-0 text-red-600">{config.errorMessage}</div>
         )}
-          {!config.buttonDisabled && <ContinueButton className="grow m-4" onClick={config.onContinueClick} />}
+        {!config.buttonDisabled && <ContinueButton className="grow m-4" onClick={config.onContinueClick} />}
         {config.shouldDisplayRedirectToSignIn && (
           <button className="-mt-2 mb-2 pt-0" onClick={handleRedirectToSignInClick}>
             I already have an account
