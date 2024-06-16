@@ -44,8 +44,6 @@ export const WeekDaysInput = ({ handleWeekDaysChange }: WeekDaysInput) => {
     });
   };
 
-  console.log(weekDaysState);
-
   return (
     <div className="flex flex-row gap-1 mt-2 mb-2">
       {weekDays.map((weekDay) => {
