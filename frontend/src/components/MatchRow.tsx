@@ -1,5 +1,4 @@
 import {WeekDaysDisplayWithCommuteTime} from "./WeekDaysDisplayWithCommuteTime.tsx";
-import {TypographyH3} from "./TypographyH3.tsx";
 import {ChosenWeekDay} from "./WeekDaysDisplay.tsx";
 import {TypographyH4} from "./TypographyH4.tsx";
 

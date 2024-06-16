@@ -1,5 +1,5 @@
 import {FoundMatches, Matches, Route} from '../components/FoundMatches.tsx';
-import {useAuth, useUser} from '@clerk/clerk-react';
+import {SignOutButton, useAuth, useUser} from '@clerk/clerk-react';
 import {RouteMap} from "../components/RouteMap.tsx";
 import {useEffect, useState} from "react";
 import {Point} from "../hooks/useFindRoute.ts";
@@ -8,6 +8,7 @@ import {TypographyH4} from "../components/TypographyH4.tsx";
 import {useCommutyApi} from "../client/useCommutyApi.ts";
 import {WeekDaysDisplayWithCommuteTime} from "../components/WeekDaysDisplayWithCommuteTime.tsx";
 import {CommuteProps} from "../components/MatchRow.tsx";
+import {BottomMenu} from "../components/BottomMenu.tsx";
 
 export const HomeView = () => {
 
@@ -42,11 +43,11 @@ export const HomeView = () => {
         console.log(matches)
     }, []);
 
-    const [startingPoint, setStartingPoint] = useState<Point | undefined>({
+    const [startingPoint] = useState<Point | undefined>({
         lat: 52.249472,
         lng: 21.098527,
     });
-    const [destinationPoint, setDestinationPoint] = useState<Point | undefined>({
+    const [destinationPoint] = useState<Point | undefined>({
         lat: 52.2323778,
         lng: 20.9861998,
     });
@@ -66,7 +67,7 @@ export const HomeView = () => {
     const commutingInfo = match && match!.commutingInfo
 
     return (
-        <div className="w-full">
+        <div className="flex">
             <div>
                 <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.fullName ?? ''}/>
                 {commutingInfo && <WeekDaysDisplayWithCommuteTime
@@ -75,7 +76,8 @@ export const HomeView = () => {
                     commute={toCommuteProps(commutingInfo!.routes[0])}></WeekDaysDisplayWithCommuteTime>}
             </div>
             <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint} height={'55vh'}></RouteMap>
-            <FoundMatches className={"rounded-full fixed top-1/2"}/>
+            <FoundMatches className={"rounded-full fixed top-1/2 w-full"}/>
+            <BottomMenu/>
         </div>
     );
 };
