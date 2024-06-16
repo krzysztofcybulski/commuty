@@ -84,7 +84,7 @@ export const OnboardingView = ({ children, config }: OnboardingViewProps) => {
         {!config.isFieldValidated && (
           <div className="flex items-center justify-center p-4 pb-0 text-red-600">{config.errorMessage}</div>
         )}
-        {!config.buttonDisabled && <ContinueButton className="grow m-4" onClick={config.onContinueClick} />}
+          {!config.buttonDisabled && <ContinueButton className="grow m-4" onClick={config.onContinueClick} />}
         {config.shouldDisplayRedirectToSignIn && (
           <button className="-mt-2 mb-2 pt-0" onClick={handleRedirectToSignInClick}>
             I already have an account

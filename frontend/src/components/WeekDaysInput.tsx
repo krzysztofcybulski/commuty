@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { WeekDayButton } from './WeekDayButton';
 import { useSelector } from 'react-redux';
-import { selectChosenDays, selectWeeksDayChosen, updateWeeksDayChosen } from '../store/appReducer';
+import { selectWeeksDayChosen, updateWeeksDayChosen } from '../store/appReducer';
 import { useAppDispatch } from '../store/store';
 
 type FullDayName = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';

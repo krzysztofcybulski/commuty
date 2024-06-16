@@ -73,19 +73,21 @@ export const HomeView = () => {
 
     console.log(commutingInfo)
     return (
-        <AnimateOnRender>
-            <div className="flex">
-                <div>
-                    <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.firstName + "!"}/>
-                    {commutingInfo && <WeekDaysDisplayWithCommuteTime
-                        className={"fixed z-10 top-4 pt-10 pl-2"}
-                        chosenWeekDays={commutingInfo.routes[0].days.map(e => ({chosenWeekDay: e, isChosen: true}))}
-                        commute={toCommuteProps(commutingInfo.routes[0])}></WeekDaysDisplayWithCommuteTime>}
+        <div>
+            <AnimateOnRender>
+                <div className="flex">
+                    <div>
+                        <TypographyH4 className={"fixed z-10 top-4 pl-2"} text={"Hey, " + user?.user?.firstName + "!"}/>
+                        {commutingInfo && <WeekDaysDisplayWithCommuteTime
+                            className={"fixed z-10 top-4 pt-10 pl-2"}
+                            chosenWeekDays={commutingInfo.routes[0].days.map(e => ({chosenWeekDay: e, isChosen: true}))}
+                            commute={toCommuteProps(commutingInfo.routes[0])}></WeekDaysDisplayWithCommuteTime>}
+                    </div>
+                    <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint} height={'55vh'}></RouteMap>
+                    <FoundMatches className={"rounded-full fixed top-1/2 w-full"}/>
                 </div>
-                <RouteMap startingPoint={startingPoint} destinationPoint={destinationPoint} height={'55vh'}></RouteMap>
-                <FoundMatches className={"rounded-full fixed top-1/2 w-full"}/>
-                <BottomMenu chosen={'HOME'}/>
-            </div>
-        </AnimateOnRender>
+            </AnimateOnRender>
+            <BottomMenu chosen={'HOME'}/>
+        </div>
     );
 };
